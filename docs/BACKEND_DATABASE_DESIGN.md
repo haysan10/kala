@@ -900,13 +900,12 @@ LIMIT 20 OFFSET 0;
 ┌─────────────────────────────────────────────────────────────┐
 │                        FRONTEND                              │
 │                    (Vite + React)                           │
-│                 Deployed: Vercel/Netlify                     │
 └─────────────────────────┬───────────────────────────────────┘
                           │ HTTPS
                           ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                      API GATEWAY                             │
-│               (Cloudflare Workers / Vercel Edge)             │
+│                (Cloudflare Workers)                          │
 │                  - Rate Limiting                             │
 │                  - CORS Handling                             │
 └─────────────────────────┬───────────────────────────────────┘
@@ -915,7 +914,6 @@ LIMIT 20 OFFSET 0;
 ┌─────────────────────────────────────────────────────────────┐
 │                    BACKEND SERVER                            │
 │                  (Node.js + Express)                         │
-│              Deployed: Railway / Render                      │
 │                                                              │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐         │
 │  │   Routes    │  │ Controllers │  │  Services   │         │

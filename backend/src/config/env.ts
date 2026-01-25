@@ -31,7 +31,13 @@ const envSchema = z.object({
     LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).default("info"),
 
     // CORS
-    FRONTEND_URL: z.string().default("http://localhost:5173"),
+    FRONTEND_URL: z.string().default(
+        process.env.NODE_ENV === "production" 
+            ? process.env.VERCEL_URL 
+                ? `https://${process.env.VERCEL_URL}` 
+                : "https://kala.vercel.app"
+            : "http://localhost:5173"
+    ),
 });
 
 export type Env = z.infer<typeof envSchema>;

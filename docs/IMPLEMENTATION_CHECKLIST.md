@@ -226,8 +226,6 @@ Dokumen ini berisi checklist lengkap untuk implementasi KALA WebApp dari Fronten
 - [ ] Deploy stage
 
 ### 8.2 Deployment
-- [ ] Frontend deployment (Vercel)
-- [ ] Backend deployment (Railway)
 - [ ] Environment variables setup
 - [ ] Domain configuration
 - [ ] SSL certificates

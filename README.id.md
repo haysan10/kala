@@ -368,41 +368,6 @@ KALA/
 
 ---
 
-## 🚀 Deployment
-
-### Platform yang Direkomendasikan (Gratis)
-
-| Komponen | Platform | Tier Gratis | Catatan |
-|----------|----------|-------------|---------|
-| **Frontend** | Vercel / Netlify | ✅ Ya | CDN global, deploy otomatis |
-| **Backend** | Render / Koyeb | ✅ Ya | Server Node.js gratis |
-| **Database** | Turso | ✅ Ya | 9GB storage gratis |
-
-### Cara Deploy ke Render
-
-1. **Push kode ke GitHub**
-   ```bash
-   git add .
-   git commit -m "feat: initial release"
-   git push origin main
-   ```
-
-2. **Buat akun di Render.com**
-
-3. **Deploy Backend**
-   - Buat "New Web Service"
-   - Hubungkan repository GitHub
-   - Root Directory: `backend`
-   - Build Command: `npm install && npm run build`
-   - Start Command: `npm run start`
-   - Tambahkan Environment Variables
-
-4. **Deploy Frontend**
-   - Buat "New Static Site"
-   - Root Directory: `.`
-   - Build Command: `npm install && npm run build`
-   - Publish Directory: `dist`
-
 ---
 
 ## 📚 Dokumentasi Lengkap

@@ -268,7 +268,7 @@ Mengelola CI/CD pipeline, deployment infrastructure, monitoring, dan memastikan 
 | Skill | Level Required | Description |
 |-------|----------------|-------------|
 | **CI/CD** | Advanced | GitHub Actions, GitLab CI |
-| **Cloud Platforms** | Intermediate | Vercel, Railway, Cloudflare |
+| **Cloud Platforms** | Intermediate | Railway, Cloudflare |
 | **Containerization** | Intermediate | Docker, container registries |
 | **Infrastructure as Code** | Basic | Terraform, Pulumi |
 | **Monitoring** | Intermediate | Logs, metrics, alerting |
@@ -290,7 +290,7 @@ Mengelola CI/CD pipeline, deployment infrastructure, monitoring, dan memastikan 
 | Category | Tools |
 |----------|-------|
 | **CI/CD** | GitHub Actions |
-| **Hosting** | Vercel (FE), Railway/Render (BE) |
+| **Hosting** | Railway (BE) |
 | **Database** | Turso |
 | **CDN/Edge** | Cloudflare |
 | **Monitoring** | Sentry, LogTail, UptimeRobot |

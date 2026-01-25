@@ -1,17 +1,18 @@
 /**
  * KALA API - Vercel Serverless Function Entry Point
  * This file serves as the entry point for all backend API routes
- * Deployed as a Vercel Serverless Function
+ * Deployed as a Vercel Serverless Function  
  */
-
 
 import app from '../backend/dist/app.js';
 
 /**
  * Main serverless function handler
  * Handles all requests to /api/* and /health
+ * @param {import('@vercel/node').VercelRequest} req
+ * @param {import('@vercel/node').VercelResponse} res
  */
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req, res) {
     try {
         // Add request metadata for logging
         const startTime = Date.now();
@@ -38,7 +39,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         
         // Handle the request with Express app
         // Express will handle routing, middleware, and responses
-        await new Promise<void>((resolve, reject) => {
+        await new Promise((resolve, reject) => {
             app(req, res);
             
             // Listen for response finish

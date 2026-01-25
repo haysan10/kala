@@ -1,16 +1,20 @@
-import { User as DbUser } from "../db/schema.js";
+import "express";
 
-// Extend Passport User type to use our database User
 declare global {
-    namespace Express {
-        // Override Passport's User type with our database User
-        interface User extends DbUser { }
-
-        // Extend Request to include our user
-        interface Request {
-            user?: User;
-        }
+  namespace Express {
+    interface Request {
+      user?: {
+        id: string;
+        email: string;
+        name: string;
+        provider: string | null;
+        providerId: string | null;
+        avatar: string | null;
+        createdAt: string;
+        updatedAt: string;
+      };
     }
+  }
 }
 
-export { };
+export {};

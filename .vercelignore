@@ -11,8 +11,8 @@ backend/node_modules/
 .env.*
 !.env.example
 
-# Backend Source Files (only deploy compiled /api)
-# IMPORTANT: Only exclude backend/src/, NOT root src/ (frontend source)
+# Backend Source Files (exclude source, but INCLUDE compiled dist/)
+# IMPORTANT: Only exclude backend/src/, NOT backend/dist/ (compiled backend)
 backend/src/**
 backend/tsconfig.json
 backend/vitest.config.ts
@@ -23,6 +23,8 @@ backend/uploads/
 backend/scripts/
 backend/__tests__/
 backend/**/__tests__/
+
+# IMPORTANT: Do NOT exclude backend/dist/ - it contains compiled code for serverless function!
 
 # Build artifacts (except dist)
 *.tsbuildinfo

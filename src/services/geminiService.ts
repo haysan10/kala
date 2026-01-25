@@ -265,3 +265,21 @@ export const startTutorChat = (systemInstruction: string) => {
     config: { systemInstruction }
   });
 };
+
+export const generateDraft = async (prompt: string, context: string): Promise<string> => {
+  const response = await ensureAI().models.generateContent({
+    model: 'gemini-3-flash-preview',
+    contents: `Act as a senior academic ghostwriter. 
+    Complete the following request based on the context of this assignment. 
+    Context: ${context}
+    Request: ${prompt}
+    
+    Instruction: 
+    - Output ONLY the generated content. 
+    - Maintain academic rigor. 
+    - Do not use conversational filler. 
+    - If math is involved, use LaTeX ($...$ for inline, $$...$$ for block).
+    - Detect the language of the prompt and respond accordingly. If Arabic is detected, ensure the response is in Arabic and compatible with RTL layouts.`
+  });
+  return response.text || '';
+};

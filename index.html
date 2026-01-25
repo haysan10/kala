@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" className="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KALA — Your Trusted Academic Intelligence OS | Master Your Studies with AI</title>
+  <meta name="description"
+    content="Kala is your supportive academic partner, helping you bridge the gap between syllabus and success with personalized task guides and Socratic mentorship.">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
+    integrity="sha384-GvrOXuhMATgEsSwCs4sm5uE9lXNVut98biJKLS8eshs79VXVh/D39ub86S/+2vgV" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"
+    integrity="sha384-cpW21h6P+rChBC96V1it7f4nS/u53Y0f2AIP+O0qIu50O6/X4Vqt9uEAF6VY9bJd"
+    crossorigin="anonymous"></script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #FFFFFF;
+      color: #37352F;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1), color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .dark body {
+      background-color: #191919;
+      color: #EDEDED;
+    }
+
+    .font-serif {
+      font-family: 'Newsreader', serif;
+    }
+
+    .font-arabic {
+      font-family: 'Amiri', serif;
+    }
+
+    .kala-label {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: #6F6E69;
+    }
+
+    .dark .kala-label {
+      color: #9B9B9B;
+    }
+
+    .noise-bg::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      pointer-events: none;
+      opacity: 0.01;
+      background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #E9E9E7;
+      border-radius: 4px;
+    }
+
+    .dark ::-webkit-scrollbar-thumb {
+      background: #2F2F2F;
+    }
+
+    @keyframes fadeInScale {
+      0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .animate-reveal {
+      animation: fadeInScale 1.2s cubic-bezier(0.2, 0, 0, 1) forwards;
+    }
+
+    .mockup-window {
+      transition: transform 0.8s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.8s ease;
+    }
+
+    .mockup-window:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 50px 100px -20px rgba(55, 53, 47, 0.05);
+    }
+
+    .dark .mockup-window:hover {
+      box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.5);
+    }
+
+    .text-gradient {
+      background: linear-gradient(180deg, #37352F 0%, #6F6E69 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .dark .text-gradient {
+      background: linear-gradient(180deg, #EDEDED 0%, #9B9B9B 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* RTL Support */
+    [dir="rtl"] {
+      text-align: right;
+    }
+
+    .rtl-container {
+      direction: rtl;
+      unicode-bidi: isolate;
+    }
+
+    .ltr-container {
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+  </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "@google/genai": "https://esm.sh/@google/genai@^1.38.0"
+  }
+}
+</script>
+  <link rel="stylesheet" href="/index.css">
+</head>
+
+<body class="noise-bg overflow-x-hidden">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>

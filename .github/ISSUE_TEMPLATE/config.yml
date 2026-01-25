@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/haysan/kala/discussions
+    about: Ask questions, share ideas, and connect with other KALA users
+  - name: 📚 Documentation
+    url: https://github.com/haysan/kala/tree/main/docs
+    about: Check out our documentation for guides and references

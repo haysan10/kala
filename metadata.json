@@ -1,0 +1,7 @@
+{
+  "name": "Kala - AI Academic Assistant",
+  "description": "An AI-powered academic companion designed to help students overcome academic anxiety and procrastination by breaking down complex assignments into manageable milestones with context-aware tutoring.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

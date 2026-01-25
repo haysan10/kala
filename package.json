@@ -16,7 +16,7 @@
     "@libsql/client": "^0.6.0",
     "@lottiefiles/dotlottie-react": "^0.8.8",
     "axios": "^1.6.8",
-    "bcrypt": "^6.0.0",
+    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "clsx": "^2.1.0",
     "dotenv": "^16.4.5",

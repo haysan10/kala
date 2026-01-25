@@ -11,7 +11,7 @@
     }
   ],
   "functions": {
-    "api/index.ts": {
+    "api/[...route].ts": {
       "includeFiles": "backend/dist/**"
     }
   },

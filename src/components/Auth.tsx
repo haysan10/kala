@@ -178,7 +178,7 @@ const Auth: React.FC<AuthProps> = ({ onAuthSuccess, onBack }) => {
                         <button
                             type="button"
                             onClick={() => {
-                                window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+                                window.location.href = `${window.location.origin}/api/auth/google`;
                             }}
                             className="flex items-center justify-center gap-3 px-4 py-3 bg-white dark:bg-[#111] border border-gray-200 dark:border-white/5 rounded-xl text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-all"
                         >
@@ -194,7 +194,7 @@ const Auth: React.FC<AuthProps> = ({ onAuthSuccess, onBack }) => {
                         <button
                             type="button"
                             onClick={() => {
-                                window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/github`;
+                                window.location.href = `${window.location.origin}/api/auth/github`;
                             }}
                             className="flex items-center justify-center gap-3 px-4 py-3 bg-white dark:bg-[#111] border border-gray-200 dark:border-white/5 rounded-xl text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-all"
                         >

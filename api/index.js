@@ -4,7 +4,7 @@
  * Deployed as a Vercel Serverless Function
  */
 
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+
 import app from '../backend/dist/app.js';
 
 /**

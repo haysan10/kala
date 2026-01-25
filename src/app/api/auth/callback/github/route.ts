@@ -127,17 +127,11 @@ export async function GET(request: NextRequest) {
     // Generate JWT token
     const token = signToken({ userId: user.id, email: user.email });
 
-    // Redirect to home with token as cookie
-    const response = NextResponse.redirect(new URL('/', request.url));
-    response.cookies.set('auth_token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7, // 7 days
-      path: '/',
-    });
-
-    return response;
+    // Redirect to home with token in query param (so MainApp can save it)
+    const baseUrl = new URL('/', request.url);
+    baseUrl.searchParams.set('token', token);
+    
+    return NextResponse.redirect(baseUrl);
   } catch (error: any) {
     console.error('GitHub OAuth callback error:', error);
     return NextResponse.redirect(new URL('/?error=oauth_error', request.url));

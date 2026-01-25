@@ -1,33 +1,67 @@
-# Development files
-node_modules/
-.env
-.env.local
-.env.*.local
+# ================================================
+# KALA Vercel Deployment - Optimized Ignore Rules
+# ================================================
 
-# Backend development files (but include api/ folder)
+# Development Dependencies
+node_modules/
 backend/node_modules/
+
+# Environment Files (will be set in Vercel Dashboard)
+.env
+.env.*
+!.env.example
+
+# Backend Source Files (only deploy compiled /api)
+# IMPORTANT: Only exclude backend/src/, NOT root src/ (frontend source)
+backend/src/**
+backend/tsconfig.json
+backend/vitest.config.ts
+
+# Backend Development Data
 backend/data/
 backend/uploads/
-backend/src/__tests__/
 backend/scripts/
+backend/__tests__/
+backend/**/__tests__/
 
-# Editor
+# Build artifacts (except dist)
+*.tsbuildinfo
+.vite/
+.cache/
+
+# Tests
+*.test.*
+*.spec.*
+__tests__/
+coverage/
+
+# Editor & IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+*.sublime-*
 
-# OS
+# OS Files
 .DS_Store
 Thumbs.db
+*.log
 
-# Documentation (if too large)
-docs/
-
-# Git
+# Git & CI
 .git/
 .github/
+.gitignore
 
-# Backup files
+# Documentation
+docs/
+*.md
+!README.md
+
+# Backup & Temp
 *.backup
+*.tmp
+temp/
+tmp/
 
+# Vercel (will be regenerated)
+.vercel/

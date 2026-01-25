@@ -103,7 +103,7 @@ export class BlocksService {
      */
     async bulkCreateBlocks(assignmentId: string, userId: string, blocks: any[]): Promise<FormattedContentBlock[]> {
         return await db.transaction(async (tx) => {
-            const results = [];
+            const results: FormattedContentBlock[] = [];
             for (let i = 0; i < blocks.length; i++) {
                 const b = blocks[i];
                 const [inserted] = await tx
@@ -117,7 +117,7 @@ export class BlocksService {
                         sortOrder: b.sortOrder !== undefined ? b.sortOrder : i,
                     })
                     .returning();
-                results.push(this.formatBlock(inserted));
+                results.push(this.formatBlock(inserted) as any);
             }
             return results;
         });

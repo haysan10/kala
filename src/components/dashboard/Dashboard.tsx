@@ -82,7 +82,11 @@ const Dashboard: React.FC<DashboardProps> = ({
 
     // Get recent assignments (last 4)
     const recentAssignments = [...assignments]
-        .sort((a, b) => new Date(b.updatedAt || b.createdAt).getTime() - new Date(a.updatedAt || a.createdAt).getTime())
+        .sort((a, b) => {
+            const dateA = new Date((a as any).updatedAt || (a as any).createdAt).getTime();
+            const dateB = new Date((b as any).updatedAt || (b as any).createdAt).getTime();
+            return dateB - dateA;
+        })
         .slice(0, 4);
 
     // Get upcoming deadlines (next 7 days)

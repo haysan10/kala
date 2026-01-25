@@ -109,14 +109,12 @@ export class AIRouterService {
     async validateGeminiKey(apiKey: string): Promise<ValidationKeyResult> {
         try {
             const client = getAIClient(apiKey);
+            const model = client.getGenerativeModel({ model: "gemini-2.0-flash" });
 
             // Simple test request to validate key
-            const response = await client.models.generateContent({
-                model: "gemini-2.0-flash",
-                contents: [{ role: "user", parts: [{ text: "Say 'valid' in one word." }] }],
-            });
-
-            const text = response.text?.trim().toLowerCase();
+            const result = await model.generateContent("Say 'valid' in one word.");
+            const response = await result.response;
+            const text = response.text()?.trim().toLowerCase();
 
             return {
                 valid: true,

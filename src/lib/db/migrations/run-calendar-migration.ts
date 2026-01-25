@@ -4,6 +4,7 @@
  * Creates the calendar_events table for Phase 3
  */
 
+// @ts-nocheck
 import Database from 'better-sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';

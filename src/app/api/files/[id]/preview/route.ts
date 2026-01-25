@@ -23,7 +23,7 @@ export async function GET(
     // Inline disposition
     headers.set('Content-Disposition', `inline; filename="${encodeURIComponent(result.metadata.originalName || result.metadata.name)}"`);
 
-    return new NextResponse(result.buffer, {
+    return new NextResponse(result.buffer as any, {
         status: 200,
         headers,
     });

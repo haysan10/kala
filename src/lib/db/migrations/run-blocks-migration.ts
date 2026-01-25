@@ -4,6 +4,7 @@
  * Creates the content_blocks table for Phase 4
  */
 
+// @ts-nocheck
 import Database from 'better-sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';

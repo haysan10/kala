@@ -184,19 +184,21 @@ export class ChatService {
                     ? `STRICT RULE: You are an academic mentor. NEVER provide direct answers, solutions, or complete work. ALWAYS guide through questions and hints.\n\n`
                     : ''}${session.systemInstruction || ''}`;
 
-                const chat = ai.chats.create({
+                const model = ai.getGenerativeModel({
                     model: "gemini-2.0-flash",
-                    config: {
-                        systemInstruction: strictSystemInstruction,
-                    },
+                    systemInstruction: strictSystemInstruction,
+                });
+
+                const chat = model.startChat({
                     history: history.slice(0, -1).map((m) => ({
-                        role: m.role as "user" | "model", // Gemini uses 'model'
+                        role: m.role === "user" ? "user" : "model",
                         parts: [{ text: m.content }],
                     })),
                 });
 
-                const response = await chat.sendMessage({ message });
-                responseText = response.text || "I apologize, but I couldn't generate a response. Please try again.";
+                const result = await chat.sendMessage(message);
+                const response = await result.response;
+                responseText = response.text() || "I apologize, but I couldn't generate a response. Please try again.";
             } else {
                 throw chatError;
             }

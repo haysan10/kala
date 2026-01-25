@@ -293,7 +293,7 @@ const MainApp: React.FC = () => {
     );
   }
 
-  if (!user && view !== 'landing') {
+  if (!user && (view as string) !== 'landing') {
     setView('auth');
     return null;
   }

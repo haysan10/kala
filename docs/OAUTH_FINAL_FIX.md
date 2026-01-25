@@ -1,198 +1,59 @@
-# 🔴 PERBAIKAN OAUTH - LANGKAH TERAKHIR
+# 🔴 SOLUSI FINAL & PENJELASAN ERROR
 
-## ✅ Status Saat Ini
+## ✅ Bug Fixed: "Request Failed / Auth Loop"
 
-- ✅ Code OAuth sudah diimplementasi
-- ✅ Environment variables Vercel sudah diupdate ke URL yang benar
-- ✅ Production URL: **`https://kala-webapp.vercel.app`**
-- ❌ **Google Cloud Console belum diupdate** ← **MASALAH INI**
-- ❌ **GitHub Developer Settings belum diupdate** ← **DAN INI**
+**Masalah:** Code sebelumnya menyimpan token di **Cookie** (HttpOnly), tapi frontend mencoba membacanya dari **LocalStorage**. Karena tidak ketemu, frontend menganggap user belum login dan error.
+
+**Fix (Sudah di-push):** Code sekarang mengirim token lewat URL (`/?token=...`) sehingga frontend bisa membacanya dan menyimpan ke LocalStorage. Frontend sekarang bisa melakukan request API dengan benar.
 
 ---
 
-## 🎯 Error yang Terjadi
+## ❌ Masalah: "Request failed with status code 400"
 
-```
-Error 400: invalid_request
-This app doesn't comply with Google's OAuth 2.0 policy
-```
+Ini **100% PASTI** karena salah satu dari 2 hal ini:
 
-**Penyebab:** Redirect URI di Google Cloud Console tidak match dengan yang di code.
+1. **Redirect URI Mismatch**: URL di Google/GitHub Console beda dengan URL yang dikirim aplikasi.
+2. **Deploymen Lama**: Anda mentest di URL deployment lama (`...-1p2ci6pm6...`) padahal settingan sudah update ke URL baru.
 
 ---
 
-## 🔧 SOLUSI - 2 Langkah Konfigurasi
+## 🚀 LANGKAH WAJIB (JANGAN SKIP)
 
-### 1️⃣ **UPDATE GOOGLE CLOUD CONSOLE** (WAJIB!)
-
-#### Langkah Detail:
-
-1. **Buka**: https://console.cloud.google.com
-2. **Login** dengan akun Google yang membuat OAuth credentials
-3. **Pilih Project**: `KALA Academic Intelligence` (di dropdown kiri atas)
-4. **Sidebar kiri**: Klik `APIs & Services` → `Credentials`
-5. **Cari OAuth 2.0 Client IDs**: Di bagian "OAuth 2.0 Client IDs"
-6. **Klik nama client** (contoh: "KALA Web Client" atau client ID yang dimulai dengan `29160567636-...`)
-7. **Di bagian "Authorized redirect URIs"**:
-   - Klik **"+ ADD URI"**
-   - Masukkan URL ini **PERSIS**:
-     ```
-     https://kala-webapp.vercel.app/api/auth/callback/google
-     ```
-   - ⚠️ **PENTING**: Pastikan tidak ada spasi, tidak ada `/` di akhir
-8. **(Opsional)** Jika ada redirect URI lama dengan format `https://kala-webapp-[hash].vercel.app`, bisa **dihapus**
-9. **Klik "SAVE"** di bagian bawah
-
-#### Screenshot Guide:
+### 1️⃣ Update Google Console (5 menit)
+Buka [Google Cloud Console](https://console.cloud.google.com/apis/credentials).
+Pastikan **Authorized redirect URIs** isinya **PERSIS**:
 ```
-┌─────────────────────────────────────────────────────┐
-│ Google Cloud Console                                │
-│ APIs & Services > Credentials                       │
-├─────────────────────────────────────────────────────┤
-│                                                     │
-│ OAuth 2.0 Client IDs                                │
-│ ┌─────────────────────────────────────────────┐   │
-│ │ KALA Web Client                             │   │
-│ │ Client ID: 29160567636-...                  │   │
-│ │                                             │   │
-│ │ Authorized redirect URIs:                   │   │
-│ │ ┌─────────────────────────────────────────┐ │   │
-│ │ │https://kala-webapp.vercel.app/api/auth/│ │   │
-│ │ │callback/google                          │ │   │
-│ │ └─────────────────────────────────────────┘ │   │
-│ │ [+ ADD URI]                                 │   │
-│ │                                             │   │
-│ │                               [SAVE]        │   │
-│ └─────────────────────────────────────────────┘   │
-│                                                     │
-└─────────────────────────────────────────────────────┘
+https://kala-webapp.vercel.app/api/auth/callback/google
+```
+❌ Hapus URL lain yang bentuknya panjang/aneh.
+
+### 2️⃣ Update GitHub Settings (2 menit)
+Buka [GitHub Developer Settings](https://github.com/settings/developers).
+Pastikan **Authorization callback URL** isinya **PERSIS**:
+```
+https://kala-webapp.vercel.app/api/auth/callback/github
 ```
 
----
-
-### 2️⃣ **UPDATE GITHUB DEVELOPER SETTINGS** (WAJIB!)
-
-#### Langkah Detail:
-
-1. **Buka**: https://github.com/settings/developers
-2. **Login** dengan akun GitHub
-3. **Pilih tab**: `OAuth Apps`
-4. **Klik aplikasi**: `KALA - Academic Intelligence` (atau nama OAuth app Anda)
-5. **Di bagian "Authorization callback URL"**:
-   - **Hapus** URL lama (kalau ada)
-   - **Masukkan** URL baru:
-     ```
-     https://kala-webapp.vercel.app/api/auth/callback/github
-     ```
-   - ⚠️ **PENTING**: Pastikan tidak ada spasi, tidak ada `/` di akhir
-6. **Klik "Update application"**
-
-#### Screenshot Guide:
-```
-┌─────────────────────────────────────────────────────┐
-│ GitHub Developer Settings                           │
-│ OAuth Apps                                          │
-├─────────────────────────────────────────────────────┤
-│                                                     │
-│ KALA - Academic Intelligence                        │
-│ ┌─────────────────────────────────────────────┐   │
-│ │ Application name:                           │   │
-│ │ KALA - Academic Intelligence                │   │
-│ │                                             │   │
-│ │ Homepage URL:                               │   │
-│ │ https://kala-webapp.vercel.app              │   │
-│ │                                             │   │
-│ │ Authorization callback URL:                 │   │
-│ │ ┌─────────────────────────────────────────┐ │   │
-│ │ │https://kala-webapp.vercel.app/api/auth/│ │   │
-│ │ │callback/github                          │ │   │
-│ │ └─────────────────────────────────────────┘ │   │
-│ │                                             │   │
-│ │                    [Update application]     │   │
-│ └─────────────────────────────────────────────┘   │
-│                                                     │
-└─────────────────────────────────────────────────────┘
-```
-
----
-
-## 🚀 **Setelah Update, Deploy Ulang**
-
-Setelah kedua provider (Google & GitHub) diupdate, jalankan:
-
+### 3️⃣ Deploy Ulang (PENTING!)
+Jalankan command ini untuk memastikan code fix (token URL) ter-deploy:
 ```bash
 npx vercel --prod
 ```
 
-Tunggu hingga deployment selesai (~1-2 menit).
+### 4️⃣ Test di URL YANG BENAR
+Setelah deploy, **JANGAN** buka URL yang ada `1p2ci6pm6` atau hash lainnya.
+Buka **HANYA**:
+👉 **https://kala-webapp.vercel.app**
 
 ---
 
-## ✅ **Testing**
+## 🔍 Cara Verifikasi
 
-Setelah deployment selesai:
+1. Buka https://kala-webapp.vercel.app
+2. Klik "Sign in with Google"
+3. Jika berhasil, Anda akan melihat URL browser berubah jadi:
+   `https://kala-webapp.vercel.app/?token=eyJhbGciOi...`
+   (Ada token panjang di URL sesaat, lalu hilang)
+4. Dashboard akan muncul.
 
-1. **Buka**: https://kala-webapp.vercel.app
-2. **Klik "Sign in with Google"**:
-   - ✅ Harus redirect ke halaman Google
-   - ✅ Pilih akun
-   - ✅ Approve permissions
-   - ✅ Redirect kembali ke app (sudah login)
-3. **Klik "Sign in with GitHub"**:
-   - ✅ Harus redirect ke halaman GitHub
-   - ✅ Authorize app
-   - ✅ Redirect kembali ke app (sudah login)
-
----
-
-## 🔍 **Troubleshooting**
-
-### Masih Error "invalid_request" di Google?
-
-**Cek:**
-1. ✅ Redirect URI di Google **PERSIS**: `https://kala-webapp.vercel.app/api/auth/callback/google`
-2. ✅ Tidak ada typo, spasi, atau `/` di akhir
-3. ✅ Sudah klik "SAVE" di Google Cloud Console
-4. ✅ Sudah deploy ulang: `npx vercel --prod`
-5. ✅ Tunggu 1-2 menit setelah deploy sebelum test lagi
-
-### Masih Error di GitHub?
-
-**Cek:**
-1. ✅ Callback URL di GitHub **PERSIS**: `https://kala-webapp.vercel.app/api/auth/callback/github`
-2. ✅ Sudah klik "Update application"
-3. ✅ Sudah deploy ulang
-
-### Google menampilkan "App not verified"?
-
-**Solusi:** Ini **normal** untuk testing!
-- Klik **"Advanced"**
-- Klik **"Go to KALA (unsafe)"**
-- Atau tambahkan email Anda sebagai **Test User** di OAuth Consent Screen
-
----
-
-## 📋 **Checklist Final**
-
-- [ ] ✅ Update redirect URI di Google Cloud Console
-- [ ] ✅ Update callback URL di GitHub Developer Settings
-- [ ] ✅ Deploy ulang: `npx vercel --prod`
-- [ ] ✅ Test Google login
-- [ ] ✅ Test GitHub login
-
----
-
-## 🎉 **Setelah Semua Langkah Selesai**
-
-OAuth authentication akan berfungsi sempurna! Users bisa:
-- ✅ Login dengan Google
-- ✅ Login dengan GitHub
-- ✅ Account otomatis dibuat
-- ✅ JWT token di-generate
-- ✅ Session management works
-
----
-
-**Ada masalah? Cek dokumentasi lengkap di:**
-- `docs/FIX_OAUTH.md`
-- `docs/OAUTH_SETUP.md`
+Jika masih error 400: **URL di Console Google/GitHub BELUM update.** Cek lagi langkah 1 & 2.

@@ -205,7 +205,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ assignments, onAssignmentCl
     }
 
     // Calculate new end time if it exists
-    let newEndTime = undefined;
+    let newEndTime: string | undefined = undefined;
     if (event.endTime) {
       const duration = new Date(event.endTime).getTime() - new Date(event.startTime).getTime();
       newEndTime = new Date(newStartTime.getTime() + duration).toISOString();

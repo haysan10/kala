@@ -20,7 +20,7 @@ export async function POST(request: Request) {
         return NextResponse.json({ success: false, error: 'No files provided' }, { status: 400 });
     }
 
-    const results = [];
+    const results: any[] = [];
     for (const file of files) {
         if (!(file instanceof File)) continue;
         const buffer = Buffer.from(await file.arrayBuffer());

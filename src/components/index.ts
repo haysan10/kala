@@ -12,7 +12,6 @@ export { default as LandingPage } from './LandingPage';
 
 // ===== Authentication Components =====
 export { default as Auth } from './Auth';
-export { default as AuthCallback } from './AuthCallback';
 
 // ===== Learning Components =====
 export { default as TutorChat } from './TutorChat';

@@ -22,7 +22,7 @@ export async function GET(
     headers.set('Content-Type', result.metadata.mimeType || 'application/octet-stream');
     headers.set('Content-Disposition', `attachment; filename="${encodeURIComponent(result.metadata.originalName || result.metadata.name)}"`);
 
-    return new NextResponse(result.buffer, {
+    return new NextResponse(result.buffer as any, {
         status: 200,
         headers,
     });

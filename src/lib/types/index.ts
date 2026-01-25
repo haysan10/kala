@@ -157,6 +157,7 @@ export const bulkCreateContentBlocksSchema = z.object({
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
+export type UpdateSettingsInput = z.infer<typeof updateSettingsSchema>;
 export type CreateAssignmentInput = z.infer<typeof createAssignmentSchema>;
 export type UpdateAssignmentInput = z.infer<typeof updateAssignmentSchema>;
 export type CreateMilestoneInput = z.infer<typeof createMilestoneSchema>;

@@ -1,0 +1,33 @@
+# Development files
+node_modules/
+.env
+.env.local
+.env.*.local
+
+# Backend development files (but include api/ folder)
+backend/node_modules/
+backend/data/
+backend/uploads/
+backend/src/__tests__/
+backend/scripts/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation (if too large)
+docs/
+
+# Git
+.git/
+.github/
+
+# Backup files
+*.backup
+

@@ -2,7 +2,29 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { Assignment, Milestone, TaskStatus, QuizQuestion, ValidationResult, MiniCourse, ScaffoldingTask } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Get API key with fallback - use Vite env var syntax for browser
+const getApiKey = () => {
+  // Try import.meta.env first (Vite standard)
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  
+  if (!apiKey) {
+    console.warn('⚠️ VITE_GEMINI_API_KEY not configured. AI features will be limited.');
+    return '';
+  }
+  
+  return apiKey;
+};
+
+const apiKey = getApiKey();
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
+
+// Helper to check if AI is available
+const ensureAI = () => {
+  if (!ai) {
+    throw new Error('Gemini API is not configured. Please set VITE_GEMINI_API_KEY environment variable.');
+  }
+  return ai;
+};
 
 export const analyzeAssignment = async (text: string, fileData?: { data: string, mimeType: string }): Promise<Partial<Assignment>> => {
   const parts = [];
@@ -17,7 +39,7 @@ export const analyzeAssignment = async (text: string, fileData?: { data: string,
     parts.push({ text: "Also analyze the attached document/image provided." });
   }
 
-  const response = await ai.models.generateContent({
+  const response = await ensureAI().models.generateContent({
     model: 'gemini-3-flash-preview',
     contents: {
       parts: [
@@ -70,7 +92,7 @@ export const generateDailySynapse = async (assignmentTitle: string, assignmentDe
       ? "The student is near completion. Challenge the 'last mile' quality and the potential for original contribution."
       : "The student is in the middle of the process. Challenge the core assumptions of their current path.";
 
-  const response = await ai.models.generateContent({
+  const response = await ensureAI().models.generateContent({
     model: 'gemini-3-flash-preview',
     contents: `Act as a world-class Senior Academic Mentor with a background in Epistemology. 
     Generate ONE single provocative, highly refined micro-question for a student working on "${assignmentTitle}" (${assignmentDesc}). 
@@ -88,7 +110,7 @@ export const generateDailySynapse = async (assignmentTitle: string, assignmentDe
 };
 
 export const generateMiniCourse = async (milestoneTitle: string, milestoneDesc: string, assignmentContext: string, fullRoadmap?: string): Promise<MiniCourse> => {
-  const response = await ai.models.generateContent({
+  const response = await ensureAI().models.generateContent({
     model: 'gemini-3-pro-preview',
     contents: `Act as a Distinguished University Professor and Subject Matter Expert. 
     Your task is to create a COMPREHENSIVE and RIGOROUS Academic Module for this specific milestone: "${milestoneTitle}".
@@ -127,7 +149,7 @@ export const generateMiniCourse = async (milestoneTitle: string, milestoneDesc: 
 };
 
 export const generateScaffoldingTask = async (assignmentContext: string): Promise<ScaffoldingTask> => {
-  const response = await ai.models.generateContent({
+  const response = await ensureAI().models.generateContent({
     model: 'gemini-3-flash-preview',
     contents: `The student is experiencing "Academic Freeze" (0% progress and very close to deadline). 
     Generate ONE "Micro-Burst" task. 
@@ -152,7 +174,7 @@ export const generateScaffoldingTask = async (assignmentContext: string): Promis
 };
 
 export const validateWork = async (assignmentContext: string, workText: string, reflectionText: string): Promise<ValidationResult> => {
-  const response = await ai.models.generateContent({
+  const response = await ensureAI().models.generateContent({
     model: 'gemini-3-pro-preview',
     contents: `PERFORM SUMMATIVE ASSESSMENT.
     Assignment: ${assignmentContext}
@@ -196,7 +218,7 @@ export const validateWork = async (assignmentContext: string, workText: string, 
 };
 
 export const generateQuiz = async (context: string): Promise<QuizQuestion[]> => {
-  const response = await ai.models.generateContent({
+  const response = await ensureAI().models.generateContent({
     model: 'gemini-3-flash-preview',
     contents: `Generate a 5-question multiple choice quiz based on this academic content: ${context}.
     Each question must have exactly 4 options and one correct answer (0-3 index).
@@ -231,14 +253,14 @@ export const startDebateSession = (milestoneTitle: string, miniCourse: MiniCours
   2. Point out logical fallacies.
   3. Only grant "Perfected" status if they prove deep conceptual mastery.`;
   
-  return ai.chats.create({
+  return ensureAI().chats.create({
     model: 'gemini-3-pro-preview',
     config: { systemInstruction }
   });
 };
 
 export const startTutorChat = (systemInstruction: string) => {
-  return ai.chats.create({
+  return ensureAI().chats.create({
     model: 'gemini-3-flash-preview',
     config: { systemInstruction }
   });

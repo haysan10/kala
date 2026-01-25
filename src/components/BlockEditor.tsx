@@ -15,7 +15,7 @@ import {
     Type, Heading1, Image as ImageIcon, Code, CheckSquare,
     Target, HelpCircle, FileText, Minus, Info, Save,
     Loader2, MoreVertical, Layout, Sparkles, Sigma, ListChecks,
-    Flag, ExternalLink, RefreshCw, Wand2, CheckCircle2, X, ChevronRight,
+    Flag, ExternalLink, Wand2, CheckCircle2, X, ChevronRight,
     Quote, Download, BookMarked, ArrowDown, ArrowUp, FileDown, BookOpen,
     Lightbulb, MessageSquare, BarChart3, Paperclip
 } from 'lucide-react';
@@ -26,7 +26,7 @@ import { exportApi, GoogleDriveFolder } from '../services/exportApi';
 import { ACADEMIC_TEMPLATES, AcademicTemplate } from '../services/templateService';
 import MathRenderer from './MathRenderer';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Cloud, CloudSync, Folder, FolderPlus, Check, X as XIcon, ChevronLeft } from 'lucide-react';
+import { Cloud, Folder, FolderPlus, Check, X as XIcon, ChevronLeft, RefreshCw } from 'lucide-react';
 
 // For KaTeX TypeScript support
 declare global {
@@ -167,7 +167,7 @@ const BlockEditor: React.FC<BlockEditorProps> = ({ assignmentId, onUpdate }) => 
             console.error('Failed to fetch Drive folders:', error);
             if (error.status === 401) {
                 if (window.confirm("Google Drive not connected. Connect now?")) {
-                    window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google/drive`;
+                    window.location.href = `/api/auth/google/drive`;
                 }
             }
         } finally {
@@ -237,7 +237,7 @@ const BlockEditor: React.FC<BlockEditorProps> = ({ assignmentId, onUpdate }) => 
             console.error('Google Drive Sync Error:', error);
             if (error.status === 401) {
                 if (window.confirm("Google Drive not connected or permissions missing. Connect now?")) {
-                    window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google/drive`;
+                    window.location.href = `/api/auth/google/drive`;
                 }
             } else {
                 alert(`Sync failed: ${error.message}`);
@@ -386,7 +386,7 @@ const BlockEditor: React.FC<BlockEditorProps> = ({ assignmentId, onUpdate }) => 
                             title="Sync to Google Drive"
                             className="p-2 hover:bg-white/10 dark:hover:bg-gray-100 rounded-xl transition-colors text-blue-400"
                         >
-                            <CloudSync size={18} />
+                            <RefreshCw size={18} />
                         </button>
                     </div>
                     <div>
@@ -466,7 +466,7 @@ const BlockEditor: React.FC<BlockEditorProps> = ({ assignmentId, onUpdate }) => 
                                         disabled={saving}
                                         className="flex-1 py-5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                                     >
-                                        {saving ? <Loader2 size={18} className="animate-spin" /> : <CloudSync size={18} />}
+                                        {saving ? <Loader2 size={18} className="animate-spin" /> : <RefreshCw size={18} />}
                                         Confirm & Sync
                                     </button>
                                 </div>

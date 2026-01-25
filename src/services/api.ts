@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const API_URL = ''; // Relative path for Next.js
 
 const api = axios.create({
     baseURL: API_URL,
@@ -30,7 +30,13 @@ api.interceptors.response.use(
         if (error.response?.status === 401) {
             localStorage.removeItem('kala_token');
             localStorage.removeItem('kala_user');
-            window.location.href = '/'; // Simple redirect for now
+            // Check if we are in browser environment before redirecting
+            if (typeof window !== 'undefined') {
+                 // Optional: don't redirect if already on landing/auth to avoid loops
+                 if (window.location.pathname !== '/') {
+                     window.location.href = '/'; 
+                 }
+            }
         }
         return Promise.reject(error);
     }

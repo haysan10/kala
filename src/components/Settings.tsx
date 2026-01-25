@@ -78,7 +78,7 @@ const SettingsPage: React.FC<SettingsProps> = ({ onNavigate }) => {
     const fetchSettings = async () => {
         try {
             const token = localStorage.getItem('kala_token');
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user/settings`, {
+            const response = await fetch(`/api/user/settings`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
@@ -125,7 +125,7 @@ const SettingsPage: React.FC<SettingsProps> = ({ onNavigate }) => {
     const fetchAIStatus = async () => {
         try {
             const token = localStorage.getItem('kala_token');
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user/ai-status`, {
+            const response = await fetch(`/api/user/ai-status`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
@@ -165,7 +165,7 @@ const SettingsPage: React.FC<SettingsProps> = ({ onNavigate }) => {
 
         try {
             const token = localStorage.getItem('kala_token');
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user/validate-api-key`, {
+            const response = await fetch(`/api/user/validate-api-key`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -227,7 +227,7 @@ const SettingsPage: React.FC<SettingsProps> = ({ onNavigate }) => {
 
         try {
             const token = localStorage.getItem('kala_token');
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user/settings`, {
+            const response = await fetch(`/api/user/settings`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -271,7 +271,7 @@ const SettingsPage: React.FC<SettingsProps> = ({ onNavigate }) => {
     const clearApiKey = async (provider: 'gemini' | 'grok') => {
         try {
             const token = localStorage.getItem('kala_token');
-            await fetch(`${import.meta.env.VITE_API_URL}/api/user/settings/api-key/${provider}`, {
+            await fetch(`/api/user/settings/api-key/${provider}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -549,7 +549,7 @@ const SettingsPage: React.FC<SettingsProps> = ({ onNavigate }) => {
                             <button
                                 onClick={() => {
                                     // Redirect to Google Drive Auth flow
-                                    window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google/drive`;
+                                    window.location.href = `/api/auth/google/drive`;
                                 }}
                                 className="px-5 py-2.5 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-xl text-xs font-bold uppercase tracking-widest text-t-primary transition-colors shadow-sm"
                             >

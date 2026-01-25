@@ -30,7 +30,7 @@ const ProfilePage: React.FC = () => {
     const fetchProfile = async () => {
         try {
             const token = localStorage.getItem('kala_token');
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user/profile`, {
+            const response = await fetch(`/api/user/profile`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
@@ -58,7 +58,7 @@ const ProfilePage: React.FC = () => {
 
         try {
             const token = localStorage.getItem('kala_token');
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user/profile`, {
+            const response = await fetch(`/api/user/profile`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,

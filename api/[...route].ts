@@ -4,23 +4,18 @@
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import app from '../backend/src/app';
 
-// Dynamically import the backend app
+// Export handler for Vercel serverless
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     try {
-        // Import the Express app
-        const { default: app } = await import('../backend/dist/app.js');
-        
         // Rewrite the path to match Express routes
-        // Vercel sends /api/xyz to api/index.ts, but Express expects /api/xyz
-        const originalUrl = req.url;
-        
-        // If URL doesn't start with /api, prepend it
+        // Vercel sends /api/xyz to this handler, Express expects /api/xyz
         if (!req.url?.startsWith('/api')) {
             req.url = `/api${req.url}`;
         }
         
-        // Handle the request
+        // Handle the request with Express app
         app(req, res);
     } catch (error) {
         console.error('Error in API handler:', error);

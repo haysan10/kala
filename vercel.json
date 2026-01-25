@@ -10,11 +10,7 @@
       "destination": "/index.html"
     }
   ],
-  "functions": {
-    "api/[...route].ts": {
-      "includeFiles": "backend/dist/**"
-    }
-  },
+
   "headers": [
     {
       "source": "/(.*)",

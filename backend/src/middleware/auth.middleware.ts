@@ -6,7 +6,7 @@ import { users } from "../db/schema.js";
 import { eq } from "drizzle-orm";
 
 // Import type declarations
-import "../types/express.d.js";
+
 
 export async function authMiddleware(
     req: Request,

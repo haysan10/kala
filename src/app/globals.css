@@ -57,10 +57,40 @@
 }
 
 @layer base {
+  html, body {
+    /* Enable smooth touch scrolling on mobile */
+    -webkit-overflow-scrolling: touch;
+    touch-action: manipulation;
+    /* Prevent text selection issues on mobile */
+    -webkit-tap-highlight-color: transparent;
+  }
+
   body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     @apply antialiased transition-colors duration-500;
+    /* Ensure body can scroll on mobile */
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+  }
+
+  /* Ensure scrollable containers work properly on mobile */
+  .overflow-y-auto,
+  .overflow-auto,
+  [class*="overflow-y-auto"],
+  [class*="overflow-auto"] {
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+
+  /* Fix for iOS Safari address bar and safe areas */
+  @supports (padding-top: env(safe-area-inset-top)) {
+    body {
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
   }
 }
 

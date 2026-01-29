@@ -11,7 +11,7 @@
 
 <br/>
 
-[![Live Demo](https://img.shields.io/badge/🌐%20Production%20Instance-kala--frontend.vercel.app-0066FF?style=for-the-badge)](https://kala-frontend.vercel.app)
+[![Live Demo](https://img.shields.io/badge/🌐%20Production%20Instance-kala--frontend.vercel.app-0066FF?style=for-the-badge)](https://kala-edu.vercel.app)
 [![Open Source](https://img.shields.io/badge/OS-Verified-00C853?style=for-the-badge)](LICENSE)
 
 <br/>

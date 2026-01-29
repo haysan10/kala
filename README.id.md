@@ -11,7 +11,7 @@
 
 <br/>
 
-[![Live Production](https://img.shields.io/badge/🌐%20Produksi%20Live-kala--frontend.vercel.app-0066FF?style=for-the-badge)](https://kala-frontend.vercel.app)
+[![Live Production](https://img.shields.io/badge/🌐%20Produksi%20Live-kala--edu.vercel.app-0066FF?style=for-the-badge)](https://kala-edu.vercel.app)
 [![Lisensi: MIT](https://img.shields.io/badge/Lisensi-MIT-00C853?style=for-the-badge)](LICENSE)
 [![Supabase](https://img.shields.io/badge/Infrastruktur-Supabase-3ECF8E?style=for-the-badge&logo=supabase)](https://supabase.com/)
 

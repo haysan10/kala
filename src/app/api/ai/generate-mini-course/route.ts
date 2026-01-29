@@ -1,8 +1,8 @@
 
 import { NextResponse } from 'next/server';
-import { getAuthUserId } from '@/lib/helpers/auth';
-import { getAIConfig } from '@/lib/helpers/ai-config';
-import { aiRouter, AIRouterService } from '@/lib/services/ai-router.service';
+import { getAuthUserId } from '../../../../lib/helpers/auth';
+import { getAIConfig } from '../../../../lib/helpers/ai-config';
+import { aiRouter, AIRouterService } from '../../../../lib/services/ai-router.service';
 
 export const dynamic = 'force-dynamic';
 

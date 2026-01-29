@@ -142,161 +142,96 @@ const Dashboard: React.FC<DashboardProps> = ({
     ];
 
     return (
-        <div className="min-h-screen pb-20 sm:pb-32 space-y-8 sm:space-y-16">
-            {/* Greeting Header */}
+        <div className="min-h-screen pb-20 space-y-12 max-w-7xl mx-auto px-4 sm:px-6">
+            {/* Minimalist Header */}
             <motion.header
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex flex-col xl:flex-row xl:items-end justify-between gap-6 py-4 sm:py-8"
+                className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pt-12 pb-6"
             >
-                <div className="space-y-2">
-                    <div className="flex items-center gap-3 text-blue-600 dark:text-blue-400">
-                        <Quote size={16} className="opacity-70 shrink-0" />
-                        <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] sm:tracking-[0.4em]">Academic Intelligence OS</span>
+                <div>
+                    <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 mb-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-current" />
+                        <span className="text-[10px] font-bold uppercase tracking-[0.2em]">Library</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-black text-gray-900 dark:text-white tracking-tighter uppercase leading-tight sm:leading-none">
+                    <h1 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">
                         {greeting}
                     </h1>
                 </div>
 
-                {/* View Switcher - Scrollable on Mobile */}
-                <div className="overflow-x-auto pb-4 sm:pb-0 scrollbar-hide">
-                    <div className="flex bg-gray-100 dark:bg-white/5 p-1 rounded-2xl sm:rounded-[2rem] border border-gray-200/50 dark:border-white/5 shadow-inner w-max min-w-full sm:min-w-0">
-                        {[
-                            { id: 'grid', icon: LayoutGrid, label: 'Grid' },
-                            { id: 'table', icon: LayoutList, label: 'Index' },
-                            { id: 'board', icon: Kanban, label: 'Clusters' },
-                            { id: 'timeline', icon: GanttChart, label: 'Temporal' },
-                            { id: 'gallery', icon: Monitor, label: 'Gallery' },
-                            { id: 'stats', icon: PieChart, label: 'Insights' }
-                        ].map((btn) => (
-                            <button
-                                key={btn.id}
-                                onClick={() => setView(btn.id as any)}
-                                className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl flex items-center gap-2 text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${view === btn.id ? 'bg-white dark:bg-navy-700 shadow-lg text-blue-600 dark:text-blue-400 scale-[1.02]' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}`}
-                            >
-                                <btn.icon size={14} className="sm:w-4 sm:h-4" /> 
-                                <span className={view === btn.id ? 'block' : 'hidden sm:block'}>{btn.label}</span>
-                            </button>
-                        ))}
-                    </div>
+                {/* Compact View Switcher */}
+                <div className="flex bg-gray-50 dark:bg-white/[0.03] p-1 rounded-xl border border-gray-100 dark:border-white/5">
+                    {[
+                        { id: 'grid', icon: LayoutGrid },
+                        { id: 'table', icon: LayoutList },
+                        { id: 'board', icon: Kanban },
+                        { id: 'stats', icon: BarChart3 }
+                    ].map((btn) => (
+                        <button
+                            key={btn.id}
+                            onClick={() => setView(btn.id as any)}
+                            className={`p-2.5 rounded-lg transition-all ${view === btn.id ? 'bg-white dark:bg-navy-800 shadow-sm text-blue-600 dark:text-blue-400' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'}`}
+                            title={btn.id}
+                        >
+                            <btn.icon size={18} />
+                        </button>
+                    ))}
                 </div>
             </motion.header>
 
-            {/* Filter Bar */}
-            <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                <div className="relative w-full md:max-w-md">
-                    <Search className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+            {/* Minimalist Filter Bar */}
+            <div className="flex flex-col md:flex-row gap-4">
+                <div className="relative flex-1 group">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-blue-500 transition-colors" size={18} />
                     <input
                         type="text"
-                        placeholder="Search academic assets..."
+                        placeholder="Search projects..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-12 sm:pl-14 pr-6 py-4 sm:py-5 bg-white dark:bg-navy-900/50 border border-gray-200 dark:border-white/10 rounded-2xl sm:rounded-[2.5rem] text-sm font-medium focus:border-blue-500 outline-none transition-all shadow-sm text-t-primary placeholder:text-gray-400"
+                        className="w-full pl-12 pr-6 py-3.5 bg-gray-50/50 dark:bg-white/[0.02] border border-gray-100 dark:border-white/5 rounded-2xl text-sm focus:bg-white dark:focus:bg-navy-900 outline-none transition-all"
                     />
                 </div>
 
-                <div className="flex gap-3 sm:gap-4 w-full md:w-auto">
-                    <div className="flex-1 md:w-48 relative">
-                        <select
-                            value={filterCourse}
-                            onChange={(e) => setFilterCourse(e.target.value)}
-                            className="w-full pl-4 sm:pl-6 pr-8 sm:pr-10 py-4 sm:py-5 bg-white dark:bg-navy-900/50 border border-gray-200 dark:border-white/10 rounded-xl sm:rounded-[2rem] text-[9px] sm:text-[10px] font-black uppercase tracking-widest outline-none appearance-none cursor-pointer text-t-secondary"
-                        >
-                            <option value="all">All Disciplines</option>
-                            {courses.map(c => <option key={c} value={c}>{c}</option>)}
-                        </select>
-                        <ChevronDown size={14} className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
-                    </div>
-
-                    <div className="flex-1 md:w-48 relative">
-                        <select
-                            value={filterStatus}
-                            onChange={(e) => setFilterStatus(e.target.value)}
-                            className="w-full pl-4 sm:pl-6 pr-8 sm:pr-10 py-4 sm:py-5 bg-white dark:bg-navy-900/50 border border-gray-200 dark:border-white/10 rounded-xl sm:rounded-[2rem] text-[9px] sm:text-[10px] font-black uppercase tracking-widest outline-none appearance-none cursor-pointer text-t-secondary"
-                        >
-                            <option value="all">Every Status</option>
-                            <option value="mastered">Mastered</option>
-                            <option value="ongoing">Ongoing</option>
-                            <option value="todo">Not Started</option>
-                            <option value="risk">At Risk</option>
-                        </select>
-                        <ChevronDown size={14} className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
-                    </div>
+                <div className="flex gap-2">
+                    <select
+                        value={filterStatus}
+                        onChange={(e) => setFilterStatus(e.target.value)}
+                        className="px-4 py-3.5 bg-gray-50/50 dark:bg-white/[0.02] border border-gray-100 dark:border-white/5 rounded-2xl text-xs font-semibold outline-none cursor-pointer appearance-none min-w-[140px]"
+                    >
+                        <option value="all">Status</option>
+                        <option value="ongoing">Active</option>
+                        <option value="mastered">Mastered</option>
+                        <option value="risk">At Risk</option>
+                    </select>
                 </div>
             </div>
 
-            {/* Productivity Insights */}
-            <motion.section
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6"
-            >
-                <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="p-5 sm:p-8 bg-blue-500/5 rounded-2xl sm:rounded-[2.5rem] border border-blue-500/10 flex flex-col justify-between group hover:bg-blue-500/10 transition-all">
-                        <div className="flex items-center justify-between">
-                            <Activity size={18} className="text-blue-600 dark:text-blue-500" />
-                            <span className="text-[9px] sm:text-[10px] font-black text-blue-600/50 dark:text-blue-500/40 uppercase tracking-widest">Pulse</span>
-                        </div>
-                        <div className="mt-4 sm:mt-6">
-                            <span className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white tabular-nums">{totalProjects}</span>
-                            <p className="text-[9px] sm:text-[10px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest mt-1">Total Assets</p>
-                        </div>
+            {/* Subtle Metrics Row */}
+            <div className="flex flex-wrap gap-8 py-2 border-y border-gray-100 dark:border-white/5">
+                {[
+                    { label: 'Total Assets', value: totalProjects, icon: Layers },
+                    { label: 'Mastered', value: completedProjects, icon: CheckCircle2 },
+                    { label: 'Velocity', value: `${learningVelocity}%`, icon: TrendingUp },
+                    { label: 'Load', value: cognitiveLoad, icon: BrainCircuit }
+                ].map((stat, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                        <stat.icon size={14} className="text-gray-400" />
+                        <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">{stat.label}</span>
+                        <span className="text-sm font-black text-gray-900 dark:text-white">{stat.value}</span>
                     </div>
-                    <div className="p-5 sm:p-8 bg-emerald-500/5 rounded-2xl sm:rounded-[2.5rem] border border-emerald-500/10 flex flex-col justify-between group hover:bg-emerald-500/10 transition-all">
-                        <div className="flex items-center justify-between">
-                            <CheckCircle2 size={18} className="text-emerald-600 dark:text-emerald-500" />
-                            <span className="text-[9px] sm:text-[10px] font-black text-emerald-600/50 dark:text-emerald-500/40 uppercase tracking-widest">Mastered</span>
-                        </div>
-                        <div className="mt-4 sm:mt-6">
-                            <span className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white tabular-nums">{completedProjects}</span>
-                            <p className="text-[9px] sm:text-[10px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest mt-1">Verified</p>
-                        </div>
-                    </div>
-                    <div className="p-5 sm:p-8 bg-blue-600 rounded-2xl sm:rounded-[2.5rem] border border-blue-500/10 flex flex-col justify-between shadow-xl sm:shadow-2xl shadow-blue-500/20 group hover:scale-[1.02] transition-all">
-                        <div className="flex items-center justify-between">
-                            <TrendingUp size={18} className="text-white" />
-                            <span className="text-[9px] sm:text-[10px] font-black text-white/40 uppercase tracking-widest">Velocity</span>
-                        </div>
-                        <div className="mt-4 sm:mt-6">
-                            <span className="text-3xl sm:text-4xl font-black text-white tabular-nums">{learningVelocity}%</span>
-                            <p className="text-[9px] sm:text-[10px] font-black text-white/60 uppercase tracking-widest mt-1">Throughput</p>
-                        </div>
-                    </div>
-                    <div className="p-5 sm:p-8 bg-gray-900 dark:bg-navy-900 rounded-2xl sm:rounded-[2.5rem] border border-white/5 flex flex-col justify-between group hover:bg-gray-800 dark:hover:bg-navy-800 transition-all">
-                        <div className="flex items-center justify-between">
-                            <BrainCircuit size={18} className="text-blue-400" />
-                            <span className="text-[9px] sm:text-[10px] font-black text-white/20 uppercase tracking-widest">Load</span>
-                        </div>
-                        <div className="mt-4 sm:mt-6">
-                            <span className="text-3xl sm:text-4xl font-black text-white tabular-nums">{cognitiveLoad}</span>
-                            <p className="text-[9px] sm:text-[10px] font-black text-white/40 uppercase tracking-widest mt-1">Parallel</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="md:col-span-4 p-6 sm:p-8 bg-gray-50 dark:bg-white/[0.02] rounded-2xl sm:rounded-[2.5rem] border border-gray-200 dark:border-white/5 flex flex-col justify-center">
-                    <div className="flex items-center gap-3 mb-4">
-                        <Quote size={20} className="text-blue-600 dark:text-blue-500" />
-                        <h4 className="text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400">Mastery Quote</h4>
-                    </div>
-                    <p className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white leading-tight italic opacity-90">
-                        "Education is not the learning of facts, but the training of the mind to think."
-                    </p>
-                    <p className="text-[10px] font-black text-blue-600 dark:text-blue-500 uppercase tracking-widest mt-4">— Albert Einstein</p>
-                </div>
-            </motion.section>
+                ))}
+            </div>
 
             <AnimatePresence mode="wait">
                 <motion.div
                     key={view}
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1.02 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
                 >
                     {view === 'grid' && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             {filteredAssignments.map((assignment, index) => (
                                 <ProjectCard
                                     key={assignment.id}
@@ -306,84 +241,39 @@ const Dashboard: React.FC<DashboardProps> = ({
                                     index={index}
                                 />
                             ))}
-                            <motion.button
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="p-8 bg-white/50 dark:bg-white/[0.02] rounded-[2.5rem] border-2 border-dashed border-gray-200 dark:border-white/5 hover:border-blue-500 group transition-all flex flex-col items-center justify-center text-center space-y-4 min-h-[250px]"
+                            <button
+                                className="group p-8 rounded-3xl border border-dashed border-gray-200 dark:border-white/10 hover:border-blue-500 hover:bg-blue-50/10 dark:hover:bg-blue-500/5 transition-all flex flex-col items-center justify-center text-center space-y-4 min-h-[220px]"
                             >
-                                <div className="w-16 h-16 bg-gray-50 dark:bg-white/5 rounded-[1.5rem] flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-all shadow-xl">
-                                    <Plus size={32} />
+                                <div className="p-4 rounded-2xl bg-gray-50 dark:bg-white/5 group-hover:bg-blue-500 group-hover:text-white transition-all">
+                                    <Plus size={24} />
                                 </div>
-                                <div>
-                                    <h3 className="text-sm font-black uppercase tracking-widest text-gray-900 dark:text-white">New Project</h3>
-                                    <p className="text-[10px] font-bold text-gray-400 mt-1">Expand Horizon</p>
-                                </div>
-                            </motion.button>
+                                <span className="text-xs font-bold text-gray-400 group-hover:text-blue-500 uppercase tracking-widest">New Project</span>
+                            </button>
                         </div>
                     )}
 
                     {view === 'table' && <TableView assignments={filteredAssignments} onSelect={onSelect} />}
                     {view === 'board' && <BoardView assignments={filteredAssignments} onSelect={onSelect} />}
-                    {view === 'timeline' && <TimelineView assignments={filteredAssignments} onSelect={onSelect} />}
-                    {view === 'gallery' && <GalleryView assignments={filteredAssignments} onSelect={onSelect} />}
                     {view === 'stats' && <StatsInsights assignments={assignments} />}
                 </motion.div>
             </AnimatePresence>
 
-            {/* Learn Section */}
-            <motion.section
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-            >
-                <div className="flex items-center gap-2 text-t-tertiary text-sm mb-4">
-                    <BookOpen size={14} />
-                    <span className="font-medium">Learn</span>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {learningResources.map((resource, index) => (
-                        <motion.div
-                            key={resource.title}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 * index }}
-                            className="group p-4 bg-secondary rounded-xl border border-soft hover:border-medium transition-all cursor-pointer"
-                        >
-                            <div className="aspect-video bg-tertiary rounded-lg mb-4 flex items-center justify-center">
-                                {resource.icon}
-                            </div>
-                            <h3 className="font-medium text-t-primary text-sm mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                                {resource.title}
-                            </h3>
-                            <p className="text-xs text-t-tertiary line-clamp-2 mb-2">{resource.description}</p>
-                            <div className="flex items-center gap-1 text-xs text-t-muted">
-                                <Clock size={12} />
-                                <span>{resource.readTime}</span>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-            </motion.section>
-
             {/* Empty State */}
             {assignments.length === 0 && (
-                <motion.section
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="text-center py-20"
-                >
-                    <div className="w-20 h-20 bg-secondary rounded-2xl flex items-center justify-center mx-auto mb-6 border border-soft">
-                        <Plus size={32} className="text-t-muted" />
+                <div className="text-center py-32 space-y-6">
+                    <div className="w-16 h-16 bg-gray-50 dark:bg-white/5 rounded-full flex items-center justify-center mx-auto border border-gray-100 dark:border-white/5">
+                        <FolderOpen size={24} className="text-gray-300" />
                     </div>
-                    <h2 className="text-2xl font-bold text-t-primary mb-2">No projects yet</h2>
-                    <p className="text-t-secondary mb-8 max-w-md mx-auto">
-                        Upload your first assignment and let KALA help you break it down into
-                        manageable milestones with AI-powered guidance.
-                    </p>
-                    <button className="px-8 py-4 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors">
-                        Upload your first project
+                    <div className="space-y-2">
+                        <h2 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">Your vault is empty</h2>
+                        <p className="text-sm text-gray-400 max-w-xs mx-auto">
+                            Upload your first assignment to begin your cognitive journey.
+                        </p>
+                    </div>
+                    <button className="px-6 py-3 bg-blue-600 text-white rounded-xl text-sm font-bold hover:bg-blue-700 transition-colors">
+                        Add Assignment
                     </button>
-                </motion.section>
+                </div>
             )}
         </div>
     );

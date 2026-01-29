@@ -250,8 +250,8 @@ const UploadAssignment: React.FC<UploadAssignmentProps> = ({ templates, onCreate
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Paste raw instructions..."
-            className="flex-1 w-full bg-zinc-50 dark:bg-black/20 text-zinc-900 dark:text-white rounded-xl p-4 text-xs font-medium border-none outline-none focus:ring-1 focus:ring-zinc-200 dark:focus:ring-zinc-800 transition-all resize-none placeholder:text-zinc-200 dark:placeholder:text-zinc-800 min-h-[160px]"
+            placeholder="Paste raw instructions (e.g., Syllabus, Rubric, or Task details)..."
+            className="flex-1 w-full bg-zinc-50/50 dark:bg-zinc-950/50 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 rounded-xl p-4 text-xs font-medium border border-zinc-100 dark:border-zinc-800 outline-none focus:ring-1 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all resize-none min-h-[180px]"
           />
         </div>
 

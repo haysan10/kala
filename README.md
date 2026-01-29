@@ -39,11 +39,12 @@ A high-fidelity workspace designed for deep focus. Your entire academic velocity
 </div>
 
 ### 02. Neural Ingestion & Synthesis
-Stop manual data entry. Feed KALA a complex Syllabus, a messy PDF, or a photo of your handwritten notes. Our neural engine extracts context, deadlines, and core concepts instantly. Now fully optimized for **Dark Mode** with high-legibility contrast.
+Stop manual data entry. Feed KALA a complex Syllabus, a messy PDF, or a photo of your handwritten notes. Our neural engine extracts context, deadlines, and core concepts instantly. Now fully optimized for **High-Contrast Visibility** in both modes.
 
 <div align="center">
-  <img src="public/assets/docs/ingestion-dark.png" width="90%" alt="Ingestion Dark Mode" style="border-radius: 12px; border: 1px solid #1f2937;"/>
-  <p><i>Project Ingestion: Seamlessly synthesizing roadmaps from raw context.</i></p>
+  <img src="public/assets/docs/ingestion-light.png" width="48%" alt="Ingestion Light Mode" style="border-radius: 8px; border: 1px solid #e2e8f0;"/>
+  <img src="public/assets/docs/ingestion-dark.png" width="48%" alt="Ingestion Dark Mode" style="border-radius: 8px; border: 1px solid #1f2937;"/>
+  <p><i>Project Ingestion: Seamlessly synthesizing roadmaps with high-fidelity legibility (Light & Dark).</i></p>
 </div>
 
 ### 03. Strategic Scheduling & Course Mastery

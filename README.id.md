@@ -41,11 +41,12 @@ Ruang kerja fidelitas tinggi yang dirancang untuk fokus mendalam. Seluruh kecepa
 </div>
 
 ### 02. Neural Ingestion & Synthesis
-Hentikan entri data manual. Berikan KALA Silabus yang kompleks, PDF yang berantakan, atau foto catatan tangan Anda. Mesin neural kami mengekstrak konteks secara instan. Kini dioptimalkan sepenuhnya untuk **Dark Mode** dengan kontras legibilitas tinggi.
+Hentikan entri data manual. Berikan KALA Silabus yang kompleks, PDF yang berantakan, atau foto catatan tangan Anda. Mesin neural kami mengekstrak konteks secara instan. Kini dioptimalkan sepenuhnya untuk **Visibilitas Kontras Tinggi** di kedua mode.
 
 <div align="center">
-  <img src="public/assets/docs/ingestion-dark.png" width="90%" alt="Ingestion Dark Mode" style="border-radius: 12px; border: 1px solid #1f2937;"/>
-  <p><i>Project Ingestion: Menyintesis peta jalan dari konteks mentah secara mulus.</i></p>
+  <img src="public/assets/docs/ingestion-light.png" width="48%" alt="Ingestion Light Mode" style="border-radius: 8px; border: 1px solid #e2e8f0;"/>
+  <img src="public/assets/docs/ingestion-dark.png" width="48%" alt="Ingestion Dark Mode" style="border-radius: 8px; border: 1px solid #1f2937;"/>
+  <p><i>Project Ingestion: Menyintesis peta jalan dengan keterbacaan fidelitas tinggi (Terang & Gelap).</i></p>
 </div>
 
 ### 03. Jadwal Strategis & Penguasaan Kursus

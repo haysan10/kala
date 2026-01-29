@@ -161,75 +161,66 @@ const UploadAssignment: React.FC<UploadAssignmentProps> = ({ templates, onCreate
   };
 
   return (
-    <div className="max-w-4xl mx-auto animate-in zoom-in duration-500 space-y-16">
-      <header className="space-y-4">
-        <h2 className="text-5xl font-black text-zinc-900 dark:text-white tracking-tighter uppercase leading-none">Ingest Workspace</h2>
-        <p className="text-xl text-zinc-400 font-medium mentor-text italic leading-relaxed">
-          Initialize your academic vault. Kala synthesizes roadmaps from your text, documents, or images.
+    <div className="max-w-4xl mx-auto animate-in zoom-in duration-500 space-y-8 sm:space-y-12">
+      <header className="space-y-2">
+        <h2 className="text-3xl sm:text-4xl font-black text-zinc-900 dark:text-white tracking-tighter uppercase leading-tight">New Project</h2>
+        <p className="text-base sm:text-lg text-zinc-400 font-medium mentor-text italic leading-relaxed max-w-2xl">
+          Initialize your academic workspace. Kala synthesizes roadmaps from your instructions, documents, or images.
         </p>
       </header>
 
-      <div className="space-y-12">
+      <div className="space-y-8 sm:space-y-10">
         {/* Course Selector */}
-        <div className="space-y-4">
-          <span className="kala-label block">Link to Course (Optional)</span>
+        <div className="space-y-3">
+          <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block">Link to Course (Optional)</span>
           <div className="relative">
             <button
               onClick={() => setShowCourseDropdown(!showCourseDropdown)}
-              className={`w-full p-5 rounded-2xl border flex items-center justify-between transition-all ${selectedCourse
-                ? 'border-gray-300 dark:border-gray-600 bg-white dark:bg-zinc-900'
-                : 'border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-zinc-900/50 hover:border-gray-400'
+              className={`w-full p-4 rounded-xl border flex items-center justify-between transition-all ${selectedCourse
+                ? 'border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900'
+                : 'border-dashed border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/30 hover:border-zinc-300 dark:hover:border-zinc-700'
                 }`}
             >
               {selectedCourse ? (
                 <div className="flex items-center gap-3">
                   <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-lg"
                     style={{ backgroundColor: selectedCourse.color + '20' }}
                   >
                     {selectedCourse.icon}
                   </div>
                   <div className="text-left">
-                    <p className="font-bold text-gray-900 dark:text-white">{selectedCourse.name}</p>
+                    <p className="text-sm font-bold text-gray-900 dark:text-white leading-none">{selectedCourse.name}</p>
                     {selectedCourse.code && (
-                      <p className="text-xs text-gray-500">{selectedCourse.code}</p>
+                      <p className="text-[10px] text-gray-500 mt-1">{selectedCourse.code}</p>
                     )}
                   </div>
-                  <div
-                    className="w-3 h-3 rounded-full ml-2"
-                    style={{ backgroundColor: selectedCourse.color }}
-                  />
                 </div>
               ) : (
-                <div className="flex items-center gap-3 text-gray-400">
-                  <BookOpen size={20} />
-                  <span className="text-sm font-medium">Select a course (optional)</span>
+                <div className="flex items-center gap-3 text-zinc-400">
+                  <BookOpen size={16} />
+                  <span className="text-sm font-medium">Select a course...</span>
                 </div>
               )}
-              <ChevronDown size={18} className={`text-gray-400 transition-transform ${showCourseDropdown ? 'rotate-180' : ''}`} />
+              <ChevronDown size={16} className={`text-zinc-400 transition-transform ${showCourseDropdown ? 'rotate-180' : ''}`} />
             </button>
 
             {showCourseDropdown && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl z-20 max-h-64 overflow-y-auto">
-                {/* No course option */}
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-2xl z-20 max-h-60 overflow-y-auto">
                 <button
                   onClick={() => {
                     setSelectedCourseId(null);
                     setShowCourseDropdown(false);
                   }}
-                  className="w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-zinc-800 flex items-center gap-3 text-gray-500"
+                  className="w-full p-3 text-left hover:bg-zinc-50 dark:hover:bg-zinc-800 flex items-center gap-3 text-zinc-500"
                 >
-                  <X size={18} />
-                  <span className="text-sm">No course</span>
+                  <X size={16} />
+                  <span className="text-sm font-medium">No course linkage</span>
                 </button>
 
                 {loadingCourses ? (
-                  <div className="p-4 text-center text-gray-400">
-                    <Loader2 className="animate-spin mx-auto" size={20} />
-                  </div>
-                ) : courses.length === 0 ? (
-                  <div className="p-4 text-center text-gray-400 text-sm">
-                    No courses yet. Create one in Course Manager.
+                  <div className="p-4 text-center text-zinc-400">
+                    <Loader2 className="animate-spin mx-auto" size={18} />
                   </div>
                 ) : (
                   courses.map(course => (
@@ -239,23 +230,15 @@ const UploadAssignment: React.FC<UploadAssignmentProps> = ({ templates, onCreate
                         setSelectedCourseId(course.id);
                         setShowCourseDropdown(false);
                       }}
-                      className={`w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-zinc-800 flex items-center gap-3 ${selectedCourseId === course.id ? 'bg-gray-50 dark:bg-zinc-800' : ''
-                        }`}
+                      className={`w-full p-3 text-left hover:bg-zinc-50 dark:hover:bg-zinc-800 flex items-center gap-3 ${selectedCourseId === course.id ? 'bg-zinc-50 dark:bg-zinc-800' : ''}`}
                     >
-                      <div
-                        className="w-8 h-8 rounded-lg flex items-center justify-center text-base"
-                        style={{ backgroundColor: course.color + '20' }}
-                      >
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: course.color + '20' }}>
                         {course.icon}
                       </div>
                       <div className="flex-1">
-                        <p className="font-semibold text-gray-900 dark:text-white text-sm">{course.name}</p>
-                        {course.code && <p className="text-xs text-gray-400">{course.code}</p>}
+                        <p className="font-bold text-zinc-900 dark:text-white text-sm leading-none">{course.name}</p>
+                        {course.code && <p className="text-[10px] text-zinc-400 mt-1">{course.code}</p>}
                       </div>
-                      <div
-                        className="w-3 h-3 rounded-full"
-                        style={{ backgroundColor: course.color }}
-                      />
                     </button>
                   ))
                 )}
@@ -265,97 +248,99 @@ const UploadAssignment: React.FC<UploadAssignmentProps> = ({ templates, onCreate
         </div>
 
         {templates.length > 0 && (
-          <div className="space-y-6">
-            <span className="kala-label block">Quick Templates</span>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="space-y-4">
+            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block">Quick Templates</span>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {templates.map(t => (
                 <button
                   key={t.id}
                   onClick={() => useTemplate(t)}
-                  className="p-8 rounded-[2.5rem] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-left hover:border-zinc-900 dark:hover:border-zinc-500 transition-all group shadow-sm"
+                  className="p-4 rounded-xl border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-left hover:border-zinc-900 dark:hover:border-zinc-500 transition-all group shadow-sm"
                 >
-                  <div className="w-10 h-10 bg-zinc-50 dark:bg-zinc-800 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><Layout size={18} /></div>
-                  <h4 className="text-sm font-black uppercase tracking-tight mb-2 truncate dark:text-white">{t.name}</h4>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t.course}</span>
+                  <div className="w-8 h-8 bg-zinc-50 dark:bg-zinc-800 rounded-lg flex items-center justify-center mb-3 group-hover:scale-105 transition-transform text-zinc-400"><Layout size={14} /></div>
+                  <h4 className="text-[11px] font-black uppercase tracking-tight mb-1 truncate dark:text-white">{t.name}</h4>
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-400">{t.course}</span>
                 </button>
               ))}
+              <button className="p-4 rounded-xl border border-dashed border-zinc-200 dark:border-zinc-800 flex flex-col items-center justify-center gap-2 text-zinc-300 hover:text-zinc-500 hover:border-zinc-400 dark:hover:text-zinc-500 transition-all">
+                <Plus size={16} />
+                <span className="text-[10px] font-black uppercase tracking-widest">More</span>
+              </button>
             </div>
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Card 1: Contextual Text */}
-          <div className="relative group">
-            <div className="absolute -inset-0.5 bg-zinc-900 dark:bg-white rounded-[3.5rem] blur opacity-5"></div>
-            <div className="relative bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-[3.5rem] p-12 space-y-8 shadow-xl h-full flex flex-col">
-              <div className="flex items-center gap-6">
-                <FileText className="text-zinc-900 dark:text-white" size={32} />
-                <span className="kala-label !text-zinc-900 dark:!text-white !opacity-100">Contextual Text</span>
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-6 sm:p-8 space-y-6 shadow-sm flex flex-col">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-xl flex items-center justify-center">
+                <FileText size={20} />
               </div>
-              <textarea
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                placeholder="Paste instructions, syllabus, or requirements..."
-                className="flex-1 w-full bg-zinc-50/50 dark:bg-zinc-950 rounded-[2.5rem] p-8 text-base font-medium border border-zinc-100 dark:border-zinc-800 outline-none focus:border-zinc-900 dark:focus:border-zinc-500 transition-all resize-none dark:text-zinc-100 placeholder-zinc-300 min-h-[280px]"
-              />
+              <span className="text-xs font-black uppercase tracking-widest text-zinc-900 dark:text-white">Contextual Text</span>
             </div>
+            <textarea
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              placeholder="Paste instructions, syllabus, or requirements..."
+              className="flex-1 w-full bg-zinc-50/50 dark:bg-zinc-950 rounded-xl p-5 text-sm font-medium border border-zinc-100 dark:border-zinc-800 outline-none focus:border-zinc-900 dark:focus:border-zinc-500 transition-all resize-none dark:text-zinc-100 placeholder-zinc-300 min-h-[220px]"
+            />
           </div>
 
           {/* Card 2: Document Upload */}
-          <div className="relative group">
-            <div className="absolute -inset-0.5 bg-zinc-900 dark:bg-white rounded-[3.5rem] blur opacity-5"></div>
-            <div className="relative bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-[3.5rem] p-12 space-y-8 shadow-xl h-full flex flex-col">
-              <div className="flex items-center gap-6">
-                <FilePlus className="text-zinc-900 dark:text-white" size={32} />
-                <span className="kala-label !text-zinc-900 dark:!text-white !opacity-100">Document Upload</span>
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-6 sm:p-8 space-y-6 shadow-sm flex flex-col">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 bg-emerald-500/10 text-emerald-600 rounded-xl flex items-center justify-center">
+                <FilePlus size={20} />
               </div>
+              <span className="text-xs font-black uppercase tracking-widest text-zinc-900 dark:text-white">Document Upload</span>
+            </div>
 
-              <div
-                onClick={() => fileInputRef.current?.click()}
-                className={`flex-1 border-2 border-dashed rounded-[2.5rem] flex flex-col items-center justify-center p-12 transition-all cursor-pointer ${uploadedFile ? 'border-zinc-900 dark:border-white bg-zinc-50/50 dark:bg-zinc-950' : 'border-zinc-100 hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-500'}`}
-              >
-                {uploadedFile ? (
-                  <div className="space-y-6 text-center">
-                    <div className="w-20 h-20 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-3xl flex items-center justify-center mx-auto shadow-2xl"><FileSearch size={40} /></div>
-                    <div>
-                      <p className="text-sm font-black uppercase tracking-tight truncate max-w-[200px] dark:text-white">{uploadedFile.name}</p>
-                      <button onClick={(e) => { e.stopPropagation(); setUploadedFile(null); }} className="text-[10px] font-black uppercase tracking-widest text-rose-500 mt-3 hover:underline">Remove Asset</button>
-                    </div>
+            <div
+              onClick={() => fileInputRef.current?.click()}
+              className={`flex-1 border-2 border-dashed rounded-xl flex flex-col items-center justify-center p-8 transition-all cursor-pointer ${uploadedFile ? 'border-emerald-500 bg-emerald-500/5' : 'border-zinc-100 hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700'}`}
+            >
+              {uploadedFile ? (
+                <div className="space-y-4 text-center">
+                  <div className="w-16 h-16 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-xl flex items-center justify-center mx-auto shadow-lg"><FileSearch size={28} /></div>
+                  <div>
+                    <p className="text-xs font-bold truncate max-w-[150px] dark:text-zinc-200">{uploadedFile.name}</p>
+                    <button onClick={(e) => { e.stopPropagation(); setUploadedFile(null); }} className="text-[9px] font-black uppercase tracking-widest text-rose-500 mt-2 hover:underline">Remove</button>
                   </div>
-                ) : (
-                  <>
-                    <div className="w-20 h-20 bg-zinc-50 dark:bg-zinc-950 text-zinc-200 dark:text-zinc-700 rounded-3xl flex items-center justify-center mb-6 shadow-inner"><Upload size={56} /></div>
-                    <p className="text-xs font-black text-zinc-400 uppercase tracking-[0.2em] text-center">PDF, Image, or Docx</p>
-                    <p className="text-[9px] text-zinc-300 uppercase tracking-widest mt-3">Max Load: 10MB</p>
-                  </>
-                )}
-                <input type="file" ref={fileInputRef} className="hidden" accept=".pdf,image/*,.docx" onChange={handleFileChange} />
-              </div>
+                </div>
+              ) : (
+                <>
+                  <div className="w-12 h-12 bg-zinc-50 dark:bg-zinc-950 text-zinc-300 dark:text-zinc-700 rounded-xl flex items-center justify-center mb-4"><Upload size={24} /></div>
+                  <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest text-center">PDF, Image, or Docx</p>
+                  <p className="text-[9px] text-zinc-300 uppercase tracking-widest mt-1">Max: 10MB</p>
+                </>
+              )}
+              <input type="file" ref={fileInputRef} className="hidden" accept=".pdf,image/*,.docx" onChange={handleFileChange} />
             </div>
           </div>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4 pt-4">
           {error && (
-            <div className="flex items-center gap-3 text-rose-500 text-[10px] font-black uppercase tracking-widest animate-in fade-in slide-in-from-top-2 justify-center">
-              <AlertTriangle size={18} />
+            <div className="flex items-center gap-2 text-rose-500 text-[10px] font-black uppercase tracking-widest justify-center">
+              <AlertTriangle size={14} />
               {error}
             </div>
           )}
           <button
             onClick={handleProcess}
             disabled={analyzing}
-            className="w-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 py-12 rounded-[3rem] font-black uppercase tracking-[0.5em] flex items-center justify-center gap-6 hover:scale-[1.01] active:scale-[0.98] transition-all disabled:opacity-50 shadow-2xl"
+            className="w-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 py-6 rounded-2xl font-black uppercase tracking-[0.4em] text-xs flex items-center justify-center gap-4 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all disabled:opacity-50"
           >
             {analyzing ? (
               <>
-                <Loader2 className="animate-spin" size={32} />
-                Initializing Cognitive Vault...
+                <Loader2 className="animate-spin" size={20} />
+                Analyzing Contents...
               </>
             ) : (
               <>
-                <Sparkles size={32} />
-                Generate Strategy Roadmap
+                <Sparkles size={20} />
+                Generate Roadmap
               </>
             )}
           </button>

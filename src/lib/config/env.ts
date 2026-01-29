@@ -3,8 +3,9 @@ import { z } from "zod";
 
 const envSchema = z.object({
     // Database
-    TURSO_DATABASE_URL: z.string().min(1).default("libsql://dummy-db-url.turso.io"),
-    TURSO_AUTH_TOKEN: z.string().optional(),
+    DATABASE_URL: z.string().min(1).optional(),
+    SUPABASE_URL: z.string().min(1).optional(),
+    SUPABASE_ANON_KEY: z.string().min(1).optional(),
 
     // Authentication
     JWT_SECRET: z.string().min(32).default("default-jwt-secret-for-build-process-only-must-be-min-32-chars"),
@@ -50,6 +51,10 @@ function loadEnv(): Env {
     }
 
     const result = envSchema.safeParse(rawEnv);
+    
+    if (typeof window === 'undefined') {
+        // Validation logging if needed
+    }
 
     if (!result.success) {
         // Log warning but don't crash immediately to allow build to proceed
@@ -61,8 +66,9 @@ function loadEnv(): Env {
         // Return a fallback/dummy config that satisfies the type
         // This is crucial for build environments where secrets might not be present
         return {
-             TURSO_DATABASE_URL: process.env.TURSO_DATABASE_URL || "libsql://dummy-db-url.turso.io",
-             TURSO_AUTH_TOKEN: process.env.TURSO_AUTH_TOKEN,
+             DATABASE_URL: process.env.DATABASE_URL,
+             SUPABASE_URL: process.env.SUPABASE_URL,
+             SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
              JWT_SECRET: process.env.JWT_SECRET || "default-jwt-secret-for-build-process-only-must-be-min-32-chars",
              JWT_EXPIRES_IN: "7d",
              GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,

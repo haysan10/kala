@@ -1,21 +1,21 @@
-import { createClient } from "@libsql/client/web";
-import { drizzle } from "drizzle-orm/libsql";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import * as schema from "../db/schema";
+import { env } from "./env";
 
 // Database credentials
-const TURSO_URL = process.env.TURSO_DATABASE_URL || "https://yes-ai-cms-haysan10.aws-us-west-2.turso.io";
-const TURSO_TOKEN = process.env.TURSO_AUTH_TOKEN || "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJleHAiOjE3NzQ1NjM1NDEsImlhdCI6MTc2OTM3OTU0MSwiaWQiOiJhYTcxMDQ5Mi00ZGUyLTRmYjAtOTg5Ny1kNTViMTExNGMzMGYiLCJyaWQiOiJlZTE1OTIwYi0wMzIwLTQ1NjctYTAzNC1mODE4NzJiZDVlNWEifQ.Jzrh0WMCvUHaTMiDo4b5aKmquexurkSowY_6LT7Gk-Eu43oTiH41HI5IEB7wavkTLEIppMDM4uDEaNAlTngHDA";
+const DATABASE_URL = env.DATABASE_URL || "";
 
 // Create client lazily
-let _client: ReturnType<typeof createClient> | null = null;
+let _client: ReturnType<typeof postgres> | null = null;
 let _db: ReturnType<typeof drizzle<typeof schema>> | null = null;
 
 function getClient() {
     if (!_client) {
-        _client = createClient({
-            url: TURSO_URL,
-            authToken: TURSO_TOKEN,
-        });
+        if (!DATABASE_URL) {
+            throw new Error("DATABASE_URL is not defined");
+        }
+        _client = postgres(DATABASE_URL);
     }
     return _client;
 }

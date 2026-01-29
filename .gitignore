@@ -103,3 +103,4 @@ package-lock.json
 .netlify/
 
 .vercel
+.env.production.vercel

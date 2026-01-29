@@ -503,21 +503,21 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, toggleDarkMode, isDa
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            className="text-5xl md:text-7xl font-bold tracking-tight text-t-primary mb-6"
+                            className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-t-primary mb-6 uppercase leading-[1.1] sm:leading-none"
                         >
                             One workspace.
                             <br />
-                            <span className="text-t-tertiary">Zero busywork.</span>
+                            <span className="text-gray-400 dark:text-gray-500">Zero busywork.</span>
                         </motion.h1>
 
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="text-xl text-t-secondary max-w-2xl mx-auto mb-10"
+                            className="text-lg sm:text-xl text-t-secondary max-w-2xl mx-auto mb-10 leading-relaxed sm:leading-normal"
                         >
                             KALA is your intelligent academic companion. Upload assignments, get AI-powered guidance,
-                            and track your learning journey — all in one beautiful workspace.
+                            and track your learning journey — all in one premium workspace.
                         </motion.p>
 
                         <motion.div
@@ -577,7 +577,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, toggleDarkMode, isDa
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                         {features.map((feature, index) => (
                             <motion.div
                                 key={feature.title}
@@ -585,15 +585,15 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, toggleDarkMode, isDa
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
-                                className="p-8 bg-secondary rounded-2xl border border-soft hover:border-medium transition-all group"
+                                className="p-6 sm:p-8 bg-secondary rounded-2xl border border-soft hover:border-medium transition-all group"
                             >
-                                <div className={`w-12 h-12 rounded-xl ${feature.bg} flex items-center justify-center mb-6 ${feature.color}`}>
-                                    {feature.icon}
+                                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl ${feature.bg} flex items-center justify-center mb-4 sm:mb-6 ${feature.color}`}>
+                                    {React.cloneElement(feature.icon as React.DetailedReactHTMLElement<any, any>, { size: 20 })}
                                 </div>
-                                <h3 className="text-xl font-bold text-t-primary mb-3">{feature.title}</h3>
-                                <p className="text-t-secondary leading-relaxed">{feature.description}</p>
-                                <div className="mt-6 flex items-center gap-2 text-sm font-medium text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    Learn more <ChevronRight size={16} />
+                                <h3 className="text-lg sm:text-xl font-black text-t-primary mb-2 sm:mb-3 uppercase tracking-tight">{feature.title}</h3>
+                                <p className="text-sm sm:text-base text-t-secondary leading-relaxed sm:leading-relaxed">{feature.description}</p>
+                                <div className="mt-4 sm:mt-6 flex items-center gap-2 text-xs sm:text-sm font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    Learn more <ChevronRight size={14} />
                                 </div>
                             </motion.div>
                         ))}
@@ -785,7 +785,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, toggleDarkMode, isDa
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
                         {testimonials.map((testimonial, index) => (
                             <motion.div
                                 key={testimonial.author}
@@ -793,21 +793,23 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, toggleDarkMode, isDa
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
-                                className="p-8 bg-primary rounded-2xl border border-soft"
+                                className="p-6 sm:p-8 bg-primary rounded-2xl border border-soft shadow-sm hover:shadow-md transition-shadow"
                             >
                                 <div className="flex gap-1 mb-4">
                                     {[...Array(5)].map((_, i) => (
-                                        <Star key={i} size={16} className="fill-yellow-400 text-yellow-400" />
+                                        <Star key={i} size={14} className="fill-yellow-400 text-yellow-400" />
                                     ))}
                                 </div>
-                                <p className="text-t-primary mb-6 leading-relaxed">"{testimonial.quote}"</p>
+                                <p className="text-base sm:text-lg font-black text-gray-900 dark:text-white mb-6 leading-tight italic">
+                                    "{testimonial.quote}"
+                                </p>
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-black text-xs sm:text-sm">
                                         {testimonial.initial}
                                     </div>
                                     <div>
-                                        <p className="font-medium text-t-primary">{testimonial.author}</p>
-                                        <p className="text-sm text-t-tertiary">{testimonial.role}</p>
+                                        <p className="text-xs sm:text-sm font-black uppercase tracking-tight text-t-primary">{testimonial.author}</p>
+                                        <p className="text-[10px] sm:text-xs text-t-tertiary">{testimonial.role}</p>
                                     </div>
                                 </div>
                             </motion.div>

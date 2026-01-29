@@ -142,94 +142,78 @@ const Dashboard: React.FC<DashboardProps> = ({
     ];
 
     return (
-        <div className="min-h-screen pb-32 space-y-16">
+        <div className="min-h-screen pb-20 sm:pb-32 space-y-8 sm:space-y-16">
             {/* Greeting Header */}
             <motion.header
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex flex-col md:flex-row md:items-end justify-between gap-6 py-8"
+                className="flex flex-col xl:flex-row xl:items-end justify-between gap-6 py-4 sm:py-8"
             >
-                <div>
-                    <div className="flex items-center gap-3 text-blue-500 mb-2">
-                        <Quote size={18} className="opacity-50" />
-                        <span className="text-[10px] font-black uppercase tracking-[0.4em]">Academic Intelligence OS</span>
+                <div className="space-y-2">
+                    <div className="flex items-center gap-3 text-blue-600 dark:text-blue-400">
+                        <Quote size={16} className="opacity-70 shrink-0" />
+                        <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] sm:tracking-[0.4em]">Academic Intelligence OS</span>
                     </div>
-                    <h1 className="text-5xl font-black text-gray-900 dark:text-white tracking-tighter uppercase leading-none">
+                    <h1 className="text-3xl sm:text-5xl font-black text-gray-900 dark:text-white tracking-tighter uppercase leading-tight sm:leading-none">
                         {greeting}
                     </h1>
                 </div>
 
-                <div className="flex bg-gray-100 dark:bg-white/5 p-1.5 rounded-[2rem] border border-gray-200/50 dark:border-white/5 shadow-inner">
-                    <button
-                        onClick={() => setView('grid')}
-                        className={`px-6 py-3 rounded-2xl flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-all ${view === 'grid' ? 'bg-white dark:bg-navy-700 shadow-xl text-blue-500 scale-105' : 'text-gray-400'}`}
-                    >
-                        <LayoutGrid size={16} /> Grid
-                    </button>
-                    <button
-                        onClick={() => setView('table')}
-                        className={`px-6 py-3 rounded-2xl flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-all ${view === 'table' ? 'bg-white dark:bg-navy-700 shadow-xl text-blue-500 scale-105' : 'text-gray-400'}`}
-                    >
-                        <LayoutList size={16} /> Index
-                    </button>
-                    <button
-                        onClick={() => setView('board')}
-                        className={`px-6 py-3 rounded-2xl flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-all ${view === 'board' ? 'bg-white dark:bg-navy-700 shadow-xl text-blue-500 scale-105' : 'text-gray-400'}`}
-                    >
-                        <Kanban size={16} /> Clusters
-                    </button>
-                    <button
-                        onClick={() => setView('timeline')}
-                        className={`px-6 py-3 rounded-2xl flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-all ${view === 'timeline' ? 'bg-white dark:bg-navy-700 shadow-xl text-blue-500 scale-105' : 'text-gray-400'}`}
-                    >
-                        <GanttChart size={16} /> Temporal
-                    </button>
-                    <button
-                        onClick={() => setView('gallery')}
-                        className={`px-6 py-3 rounded-2xl flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-all ${view === 'gallery' ? 'bg-white dark:bg-navy-700 shadow-xl text-blue-500 scale-105' : 'text-gray-400'}`}
-                    >
-                        <Monitor size={16} /> Gallery
-                    </button>
-                    <button
-                        onClick={() => setView('stats')}
-                        className={`px-6 py-3 rounded-2xl flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-all ${view === 'stats' ? 'bg-white dark:bg-navy-700 shadow-xl text-blue-500 scale-105' : 'text-gray-400'}`}
-                    >
-                        <PieChart size={16} /> Insights
-                    </button>
+                {/* View Switcher - Scrollable on Mobile */}
+                <div className="overflow-x-auto pb-4 sm:pb-0 scrollbar-hide">
+                    <div className="flex bg-gray-100 dark:bg-white/5 p-1 rounded-2xl sm:rounded-[2rem] border border-gray-200/50 dark:border-white/5 shadow-inner w-max min-w-full sm:min-w-0">
+                        {[
+                            { id: 'grid', icon: LayoutGrid, label: 'Grid' },
+                            { id: 'table', icon: LayoutList, label: 'Index' },
+                            { id: 'board', icon: Kanban, label: 'Clusters' },
+                            { id: 'timeline', icon: GanttChart, label: 'Temporal' },
+                            { id: 'gallery', icon: Monitor, label: 'Gallery' },
+                            { id: 'stats', icon: PieChart, label: 'Insights' }
+                        ].map((btn) => (
+                            <button
+                                key={btn.id}
+                                onClick={() => setView(btn.id as any)}
+                                className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl flex items-center gap-2 text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${view === btn.id ? 'bg-white dark:bg-navy-700 shadow-lg text-blue-600 dark:text-blue-400 scale-[1.02]' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}`}
+                            >
+                                <btn.icon size={14} className="sm:w-4 sm:h-4" /> 
+                                <span className={view === btn.id ? 'block' : 'hidden sm:block'}>{btn.label}</span>
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </motion.header>
 
             {/* Filter Bar */}
             <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
                 <div className="relative w-full md:max-w-md">
-                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                    <Search className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                     <input
                         type="text"
                         placeholder="Search academic assets..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-14 pr-6 py-5 bg-white dark:bg-navy-900/50 border border-gray-100 dark:border-white/5 rounded-[2.5rem] text-sm font-medium focus:border-blue-500 outline-none transition-all shadow-sm"
+                        className="w-full pl-12 sm:pl-14 pr-6 py-4 sm:py-5 bg-white dark:bg-navy-900/50 border border-gray-200 dark:border-white/10 rounded-2xl sm:rounded-[2.5rem] text-sm font-medium focus:border-blue-500 outline-none transition-all shadow-sm text-t-primary placeholder:text-gray-400"
                     />
                 </div>
 
-                <div className="flex gap-4 w-full md:w-auto">
+                <div className="flex gap-3 sm:gap-4 w-full md:w-auto">
                     <div className="flex-1 md:w-48 relative">
                         <select
                             value={filterCourse}
                             onChange={(e) => setFilterCourse(e.target.value)}
-                            className="w-full pl-6 pr-10 py-5 bg-white dark:bg-navy-900/50 border border-gray-100 dark:border-white/5 rounded-[2rem] text-[10px] font-black uppercase tracking-widest outline-none appearance-none cursor-pointer"
+                            className="w-full pl-4 sm:pl-6 pr-8 sm:pr-10 py-4 sm:py-5 bg-white dark:bg-navy-900/50 border border-gray-200 dark:border-white/10 rounded-xl sm:rounded-[2rem] text-[9px] sm:text-[10px] font-black uppercase tracking-widest outline-none appearance-none cursor-pointer text-t-secondary"
                         >
                             <option value="all">All Disciplines</option>
                             {courses.map(c => <option key={c} value={c}>{c}</option>)}
                         </select>
-                        <ChevronDown size={14} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                        <ChevronDown size={14} className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
                     </div>
 
                     <div className="flex-1 md:w-48 relative">
                         <select
                             value={filterStatus}
                             onChange={(e) => setFilterStatus(e.target.value)}
-                            className="w-full pl-6 pr-10 py-5 bg-white dark:bg-navy-900/50 border border-gray-100 dark:border-white/5 rounded-[2rem] text-[10px] font-black uppercase tracking-widest outline-none appearance-none cursor-pointer"
+                            className="w-full pl-4 sm:pl-6 pr-8 sm:pr-10 py-4 sm:py-5 bg-white dark:bg-navy-900/50 border border-gray-200 dark:border-white/10 rounded-xl sm:rounded-[2rem] text-[9px] sm:text-[10px] font-black uppercase tracking-widest outline-none appearance-none cursor-pointer text-t-secondary"
                         >
                             <option value="all">Every Status</option>
                             <option value="mastered">Mastered</option>
@@ -237,7 +221,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                             <option value="todo">Not Started</option>
                             <option value="risk">At Risk</option>
                         </select>
-                        <ChevronDown size={14} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                        <ChevronDown size={14} className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
                     </div>
                 </div>
             </div>
@@ -246,60 +230,60 @@ const Dashboard: React.FC<DashboardProps> = ({
             <motion.section
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="grid grid-cols-1 md:grid-cols-12 gap-6"
+                className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6"
             >
-                <div className="md:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="p-8 bg-blue-500/5 rounded-[2.5rem] border border-blue-500/10 flex flex-col justify-between group hover:bg-blue-500/10 transition-all">
+                <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="p-5 sm:p-8 bg-blue-500/5 rounded-2xl sm:rounded-[2.5rem] border border-blue-500/10 flex flex-col justify-between group hover:bg-blue-500/10 transition-all">
                         <div className="flex items-center justify-between">
-                            <Activity size={20} className="text-blue-500" />
-                            <span className="text-[10px] font-black text-blue-500/40 uppercase">Pulse</span>
+                            <Activity size={18} className="text-blue-600 dark:text-blue-500" />
+                            <span className="text-[9px] sm:text-[10px] font-black text-blue-600/50 dark:text-blue-500/40 uppercase tracking-widest">Pulse</span>
                         </div>
-                        <div className="mt-6">
-                            <span className="text-4xl font-black text-gray-900 dark:text-white tabular-nums">{totalProjects}</span>
-                            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Total Assets</p>
+                        <div className="mt-4 sm:mt-6">
+                            <span className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white tabular-nums">{totalProjects}</span>
+                            <p className="text-[9px] sm:text-[10px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest mt-1">Total Assets</p>
                         </div>
                     </div>
-                    <div className="p-8 bg-emerald-500/5 rounded-[2.5rem] border border-emerald-500/10 flex flex-col justify-between group hover:bg-emerald-500/10 transition-all">
+                    <div className="p-5 sm:p-8 bg-emerald-500/5 rounded-2xl sm:rounded-[2.5rem] border border-emerald-500/10 flex flex-col justify-between group hover:bg-emerald-500/10 transition-all">
                         <div className="flex items-center justify-between">
-                            <CheckCircle2 size={20} className="text-emerald-500" />
-                            <span className="text-[10px] font-black text-emerald-500/40 uppercase">Mastered</span>
+                            <CheckCircle2 size={18} className="text-emerald-600 dark:text-emerald-500" />
+                            <span className="text-[9px] sm:text-[10px] font-black text-emerald-600/50 dark:text-emerald-500/40 uppercase tracking-widest">Mastered</span>
                         </div>
-                        <div className="mt-6">
-                            <span className="text-4xl font-black text-gray-900 dark:text-white tabular-nums">{completedProjects}</span>
-                            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Verified</p>
+                        <div className="mt-4 sm:mt-6">
+                            <span className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white tabular-nums">{completedProjects}</span>
+                            <p className="text-[9px] sm:text-[10px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest mt-1">Verified</p>
                         </div>
                     </div>
-                    <div className="p-8 bg-blue-600 rounded-[2.5rem] border border-blue-500/10 flex flex-col justify-between shadow-2xl shadow-blue-500/20 group hover:scale-[1.02] transition-all">
+                    <div className="p-5 sm:p-8 bg-blue-600 rounded-2xl sm:rounded-[2.5rem] border border-blue-500/10 flex flex-col justify-between shadow-xl sm:shadow-2xl shadow-blue-500/20 group hover:scale-[1.02] transition-all">
                         <div className="flex items-center justify-between">
-                            <TrendingUp size={20} className="text-white" />
-                            <span className="text-[10px] font-black text-white/40 uppercase">Velocity</span>
+                            <TrendingUp size={18} className="text-white" />
+                            <span className="text-[9px] sm:text-[10px] font-black text-white/40 uppercase tracking-widest">Velocity</span>
                         </div>
-                        <div className="mt-6">
-                            <span className="text-4xl font-black text-white tabular-nums">{learningVelocity}%</span>
-                            <p className="text-[10px] font-black text-white/50 uppercase tracking-widest mt-1">Throughput</p>
+                        <div className="mt-4 sm:mt-6">
+                            <span className="text-3xl sm:text-4xl font-black text-white tabular-nums">{learningVelocity}%</span>
+                            <p className="text-[9px] sm:text-[10px] font-black text-white/60 uppercase tracking-widest mt-1">Throughput</p>
                         </div>
                     </div>
-                    <div className="p-8 bg-navy-900 rounded-[2.5rem] border border-white/5 flex flex-col justify-between group hover:bg-navy-800 transition-all">
+                    <div className="p-5 sm:p-8 bg-gray-900 dark:bg-navy-900 rounded-2xl sm:rounded-[2.5rem] border border-white/5 flex flex-col justify-between group hover:bg-gray-800 dark:hover:bg-navy-800 transition-all">
                         <div className="flex items-center justify-between">
-                            <BrainCircuit size={20} className="text-blue-400" />
-                            <span className="text-[10px] font-black text-white/20 uppercase">Load</span>
+                            <BrainCircuit size={18} className="text-blue-400" />
+                            <span className="text-[9px] sm:text-[10px] font-black text-white/20 uppercase tracking-widest">Load</span>
                         </div>
-                        <div className="mt-6">
-                            <span className="text-4xl font-black text-white tabular-nums">{cognitiveLoad}</span>
-                            <p className="text-[10px] font-black text-white/40 uppercase tracking-widest mt-1">Parallel</p>
+                        <div className="mt-4 sm:mt-6">
+                            <span className="text-3xl sm:text-4xl font-black text-white tabular-nums">{cognitiveLoad}</span>
+                            <p className="text-[9px] sm:text-[10px] font-black text-white/40 uppercase tracking-widest mt-1">Parallel</p>
                         </div>
                     </div>
                 </div>
 
-                <div className="md:col-span-4 p-8 bg-gray-50 dark:bg-white/[0.02] rounded-[2.5rem] border border-gray-100 dark:border-white/5 flex flex-col justify-center">
-                    <div className="flex items-center gap-4 mb-6">
-                        <Quote size={24} className="text-blue-500" />
-                        <h4 className="text-sm font-black uppercase tracking-widest text-gray-400">Mastery Quote</h4>
+                <div className="md:col-span-4 p-6 sm:p-8 bg-gray-50 dark:bg-white/[0.02] rounded-2xl sm:rounded-[2.5rem] border border-gray-200 dark:border-white/5 flex flex-col justify-center">
+                    <div className="flex items-center gap-3 mb-4">
+                        <Quote size={20} className="text-blue-600 dark:text-blue-500" />
+                        <h4 className="text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400">Mastery Quote</h4>
                     </div>
-                    <p className="text-xl font-bold text-gray-900 dark:text-white leading-tight italic opacity-90">
+                    <p className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white leading-tight italic opacity-90">
                         "Education is not the learning of facts, but the training of the mind to think."
                     </p>
-                    <p className="text-[10px] font-black text-blue-500 uppercase tracking-widest mt-4">— Albert Einstein</p>
+                    <p className="text-[10px] font-black text-blue-600 dark:text-blue-500 uppercase tracking-widest mt-4">— Albert Einstein</p>
                 </div>
             </motion.section>
 

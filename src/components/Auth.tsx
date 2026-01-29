@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Lock, User, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, Loader2, AlertCircle, Sparkles } from 'lucide-react';
 import { authService } from '../services/authService';
 import { useToast } from './ui/Toast';
 
@@ -213,6 +213,34 @@ const Auth: React.FC<AuthProps> = ({ onAuthSuccess, onBack }) => {
                             <span className="text-xs font-bold text-gray-600 dark:text-gray-300">GitHub</span>
                         </button>
                     </div>
+
+                    <button
+                        type="button"
+                        onClick={async () => {
+                            setLoading(true);
+                            try {
+                                const response = await fetch('/api/auth/demo', { method: 'POST' });
+                                const data = await response.json();
+                                if (data.success) {
+                                    localStorage.setItem('kala_token', data.data.token);
+                                    localStorage.setItem('kala_user', JSON.stringify(data.data.user));
+                                    toast.success('Demo Access Granted', 'Exploring KALA as a demo user.');
+                                    onAuthSuccess();
+                                } else {
+                                    toast.error('Demo Failed', data.error);
+                                }
+                            } catch (err) {
+                                toast.error('Connection Error', 'Failed to initialize demo session.');
+                            } finally {
+                                setLoading(false);
+                            }
+                        }}
+                        disabled={loading}
+                        className="w-full flex items-center justify-center gap-2 py-3 px-4 border-2 border-dashed border-blue-500/30 rounded-xl hover:bg-blue-500/5 hover:border-blue-500/50 transition-all group"
+                    >
+                        <Sparkles size={16} className="text-blue-500 group-hover:scale-110 transition-transform" />
+                        <span className="text-xs font-black uppercase tracking-widest text-blue-600 dark:text-blue-400">Try Demo Account</span>
+                    </button>
                 </div>
 
                 <div className="text-center">

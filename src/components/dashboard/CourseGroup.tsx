@@ -32,23 +32,23 @@ const CourseGroup: React.FC<CourseGroupProps> = ({
             className="space-y-4"
         >
             {/* Course Header */}
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center border border-soft">
-                        <FolderOpen size={18} className="text-t-secondary" />
+                    <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center border border-soft shadow-sm">
+                        <FolderOpen size={18} className="text-blue-600 dark:text-blue-400" />
                     </div>
                     <div>
-                        <h2 className="text-lg font-bold text-t-primary">
+                        <h2 className="text-lg font-black text-t-primary uppercase tracking-tight">
                             {courseName}
                         </h2>
-                        <div className="flex items-center gap-2 text-xs text-t-tertiary">
-                            <span>{assignments.length} project{assignments.length !== 1 ? 's' : ''}</span>
+                        <div className="flex items-center gap-2 text-[11px] font-bold text-t-secondary">
+                            <span className="bg-tertiary/50 px-2 py-0.5 rounded uppercase tracking-wider">{assignments.length} project{assignments.length !== 1 ? 's' : ''}</span>
                             <span>·</span>
-                            <span>{totalProgress}% complete</span>
+                            <span className="text-blue-600 dark:text-blue-400">{totalProgress}% avg. complete</span>
                             {atRiskCount > 0 && (
                                 <>
                                     <span>·</span>
-                                    <span className="text-red-500 font-medium">
+                                    <span className="text-red-500 font-black uppercase tracking-wider">
                                         {atRiskCount} at risk
                                     </span>
                                 </>
@@ -58,21 +58,21 @@ const CourseGroup: React.FC<CourseGroupProps> = ({
                 </div>
 
                 {/* Progress indicator */}
-                <div className="flex items-center gap-3">
-                    <div className="w-32 h-1.5 bg-tertiary rounded-full overflow-hidden">
+                <div className="flex items-center gap-3 self-end sm:self-center">
+                    <div className="hidden sm:block w-32 h-1.5 bg-tertiary rounded-full overflow-hidden shadow-inner">
                         <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: `${totalProgress}%` }}
                             transition={{ delay: 0.3 + (index * 0.1), duration: 0.8 }}
                             className={`h-full rounded-full ${totalProgress === 100
-                                    ? 'bg-green-500'
+                                    ? 'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.3)]'
                                     : atRiskCount > 0
-                                        ? 'bg-orange-500'
-                                        : 'bg-blue-500'
+                                        ? 'bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.3)]'
+                                        : 'bg-blue-600 shadow-[0_0_10px_rgba(37,99,235,0.3)]'
                                 }`}
                         />
                     </div>
-                    <span className="text-sm font-bold text-t-primary w-10 text-right">
+                    <span className="text-sm font-black text-t-primary w-10 text-right sm:text-left">
                         {totalProgress}%
                     </span>
                 </div>

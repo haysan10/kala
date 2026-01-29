@@ -29,13 +29,33 @@ By merging **Socratic pedagogical methods** with **Advanced Neural Ingestion**, 
 
 ## 🎭 Cinematic Feature Showcase
 
-### 01. Neural Ingestion & Synthesis
-Stop manual data entry. Feed KALA a complex Syllabus, a messy PDF, or a photo of your handwritten notes. Our neural engine extracts context, deadlines, and core concepts instantly.
+### 01. The Cognitive Library (Zen Mode)
+A high-fidelity workspace designed for deep focus. Your entire academic velocity, visualized. Track mastery levels, upcoming pulses, and your "Daily Synapse" in a clean interface that respects your attention.
 
-### 02. The Cognitive Library (Minimalist)
-A high-fidelity workspace designed for focus. Your entire academic velocity, visualized. Track mastery levels, upcoming pulses, and your "Daily Synapse" in a clean, Notion-inspired interface that respects your attention.
+<div align="center">
+  <img src="public/assets/docs/library-light.png" width="48%" alt="Library Light Mode" style="border-radius: 8px; border: 1px solid #e2e8f0;"/>
+  <img src="public/assets/docs/library-dark.png" width="48%" alt="Library Dark Mode" style="border-radius: 8px; border: 1px solid #1f2937;"/>
+  <p><i>Library: Balancing information density with visual clarity (Light & Dark).</i></p>
+</div>
 
-### 03. Socratic Sparring (AI Tutor)
+### 02. Neural Ingestion & Synthesis
+Stop manual data entry. Feed KALA a complex Syllabus, a messy PDF, or a photo of your handwritten notes. Our neural engine extracts context, deadlines, and core concepts instantly. Now fully optimized for **Dark Mode** with high-legibility contrast.
+
+<div align="center">
+  <img src="public/assets/docs/ingestion-dark.png" width="90%" alt="Ingestion Dark Mode" style="border-radius: 12px; border: 1px solid #1f2937;"/>
+  <p><i>Project Ingestion: Seamlessly synthesizing roadmaps from raw context.</i></p>
+</div>
+
+### 03. Strategic Scheduling & Course Mastery
+Visualize your academic journey with the integrated **Calendar** and manage your **Courses** with precision. Every view is built for performance and clarity.
+
+<div align="center">
+  <img src="public/assets/docs/calendar-dark.png" width="48%" alt="Calendar Dark Mode" style="border-radius: 8px; border: 1px solid #1f2937;"/>
+  <img src="public/assets/docs/courses-dark.png" width="48%" alt="Courses Dark Mode" style="border-radius: 8px; border: 1px solid #1f2937;"/>
+  <p><i>Calendar & Course Manager: Mastering the logistics of learning.</i></p>
+</div>
+
+### 04. Socratic Sparring (AI Tutor)
 Integrated with **Gemini 1.5 Pro** and **Grok-1**, KALA doesn't just give answers. It engages you in critical debates, challenges your assumptions, and ensures you *actually* understand the core concepts through dialectical inquiry.
 
 ---

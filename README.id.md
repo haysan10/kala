@@ -31,14 +31,34 @@ Dengan menggabungkan **metode pedagogi Sokratik** dengan **Ingesti Neural Tingka
 
 ## 🎭 Showcase Fitur Sinematik
 
-### 01. Neural Ingestion & Synthesis
-Hentikan entri data manual. Berikan KALA Silabus yang kompleks, PDF yang berantakan, atau bahkan foto catatan tangan Anda. Mesin neural kami akan mengekstrak konteks, tenggat waktu, dan konsep inti secara instan.
+### 01. Perpustakaan Kognitif (Zen Mode)
+Ruang kerja fidelitas tinggi yang dirancang untuk fokus mendalam. Seluruh kecepatan akademik Anda divisualisasikan dengan indah. Lacak tingkat penguasaan, tenggat waktu mendatang, dan "Daily Synapse" Anda dalam antarmuka yang bersih.
 
-### 02. Perpustakaan Kognitif (Minimalist)
-Ruang kerja fidelitas tinggi yang dirancang untuk fokus. Seluruh kecepatan akademik Anda divisualisasikan dengan indah. Lacak tingkat penguasaan, denyut tugas mendatang, dan "Daily Synapse" Anda dalam antarmuka bersih yang menghargai perhatian Anda.
+<div align="center">
+  <img src="public/assets/docs/library-light.png" width="48%" alt="Library Light Mode" style="border-radius: 8px; border: 1px solid #e2e8f0;"/>
+  <img src="public/assets/docs/library-dark.png" width="48%" alt="Library Dark Mode" style="border-radius: 8px; border: 1px solid #1f2937;"/>
+  <p><i>Library: Menyeimbangkan kepadatan informasi dengan kejelasan visual (Terang & Gelap).</i></p>
+</div>
 
-### 03. Socratic Sparring (Mentor AI)
-Terintegrasi dengan **Gemini 1.5 Pro** dan **Grok-1**, KALA tidak sekadar memberikan jawaban. Ia melibatkan Anda dalam debat kritis, menantang asumsi Anda, dan memastikan Anda *benar-benar* memahami konsep inti melalui inkuiri dialektis.
+### 02. Neural Ingestion & Synthesis
+Hentikan entri data manual. Berikan KALA Silabus yang kompleks, PDF yang berantakan, atau foto catatan tangan Anda. Mesin neural kami mengekstrak konteks secara instan. Kini dioptimalkan sepenuhnya untuk **Dark Mode** dengan kontras legibilitas tinggi.
+
+<div align="center">
+  <img src="public/assets/docs/ingestion-dark.png" width="90%" alt="Ingestion Dark Mode" style="border-radius: 12px; border: 1px solid #1f2937;"/>
+  <p><i>Project Ingestion: Menyintesis peta jalan dari konteks mentah secara mulus.</i></p>
+</div>
+
+### 03. Jadwal Strategis & Penguasaan Kursus
+Visualisasikan perjalanan akademik Anda dengan **Kalender** terintegrasi dan kelola **Kursus** Anda dengan presisi tinggi. Setiap tampilan dibangun untuk performa dan kejelasan.
+
+<div align="center">
+  <img src="public/assets/docs/calendar-dark.png" width="48%" alt="Calendar Dark Mode" style="border-radius: 8px; border: 1px solid #1f2937;"/>
+  <img src="public/assets/docs/courses-dark.png" width="48%" alt="Courses Dark Mode" style="border-radius: 8px; border: 1px solid #1f2937;"/>
+  <p><i>Calendar & Course Manager: Menguasai logistik pembelajaran dengan gaya.</i></p>
+</div>
+
+### 04. Socratic Sparring (Mentor AI)
+Terintegrasi dengan **Gemini 1.5 Pro** dan **Grok-1**, KALA tidak sekadar memberikan jawaban. Ia melibatkan Anda dalam debat kritis, menantang asumsi Anda, dan memastikan pemahaman sejati melalui inkuiri dialektis.
 
 ---
 

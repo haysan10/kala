@@ -226,7 +226,7 @@ interface ToastItemProps {
     onDismiss: () => void;
 }
 
-function ToastItem({ toast, onDismiss }: ToastItemProps) {
+const ToastItem = React.forwardRef<HTMLDivElement, ToastItemProps>(({ toast, onDismiss }, ref) => {
     const [progress, setProgress] = useState(100);
 
     // Auto-dismiss timer
@@ -289,6 +289,7 @@ function ToastItem({ toast, onDismiss }: ToastItemProps) {
 
     return (
         <motion.div
+            ref={ref}
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, x: 100, scale: 0.95 }}
@@ -357,7 +358,9 @@ function ToastItem({ toast, onDismiss }: ToastItemProps) {
             )}
         </motion.div>
     );
-}
+});
+
+ToastItem.displayName = 'ToastItem';
 
 // ==================== CONFIRMATION DIALOG ====================
 

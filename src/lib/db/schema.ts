@@ -1,9 +1,22 @@
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 import { sql } from "drizzle-orm";
 
+// Use Web Crypto API (universally available in Node.js 19+, browsers, and Edge runtimes)
+function generateUUID(): string {
+    if (typeof globalThis !== 'undefined' && globalThis.crypto?.randomUUID) {
+        return globalThis.crypto.randomUUID();
+    }
+    // Fallback for older environments
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
 // ==================== USERS ====================
 export const users = sqliteTable("users", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     email: text("email").notNull().unique(),
     passwordHash: text("password_hash"), // Nullable for OAuth users
     name: text("name").notNull(),
@@ -23,7 +36,7 @@ export const users = sqliteTable("users", {
 
 // ==================== USER SETTINGS ====================
 export const userSettings = sqliteTable("user_settings", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     userId: text("user_id").notNull().unique().references(() => users.id, { onDelete: "cascade" }),
 
     // AI Provider Configuration
@@ -58,7 +71,7 @@ export const userSettings = sqliteTable("user_settings", {
 
 // ==================== COURSES (MATAKULIAH) ====================
 export const courses = sqliteTable("courses", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
 
     // Course Identity
@@ -90,7 +103,7 @@ export const courses = sqliteTable("courses", {
 
 // ==================== ASSIGNMENTS ====================
 export const assignments = sqliteTable("assignments", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
 
     // NEW: Link to course (matakuliah)
@@ -116,7 +129,7 @@ export const assignments = sqliteTable("assignments", {
 
 // ==================== MILESTONES ====================
 export const milestones = sqliteTable("milestones", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     assignmentId: text("assignment_id").notNull().references(() => assignments.id, { onDelete: "cascade" }),
     title: text("title").notNull(),
     description: text("description"),
@@ -130,7 +143,7 @@ export const milestones = sqliteTable("milestones", {
 
 // ==================== MINI COURSES ====================
 export const miniCourses = sqliteTable("mini_courses", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     milestoneId: text("milestone_id").notNull().unique().references(() => milestones.id, { onDelete: "cascade" }),
     learningOutcome: text("learning_outcome"),
     overview: text("overview"),
@@ -145,7 +158,7 @@ export const miniCourses = sqliteTable("mini_courses", {
 
 // ==================== DEBATE TURNS ====================
 export const debateTurns = sqliteTable("debate_turns", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     miniCourseId: text("mini_course_id").notNull().references(() => miniCourses.id, { onDelete: "cascade" }),
     role: text("role").notNull(), // user, model
     content: text("content").notNull(),
@@ -155,7 +168,7 @@ export const debateTurns = sqliteTable("debate_turns", {
 
 // ==================== FOLDERS ====================
 export const folders = sqliteTable("folders", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
 
     // Folder Identity
@@ -180,7 +193,7 @@ export const folders = sqliteTable("folders", {
 
 // ==================== FILES (Enhanced) ====================
 export const files = sqliteTable("files", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
 
     // File Identity
@@ -214,7 +227,7 @@ export const files = sqliteTable("files", {
 
 // ==================== VALIDATION RESULTS ====================
 export const validationResults = sqliteTable("validation_results", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     assignmentId: text("assignment_id").notNull().references(() => assignments.id, { onDelete: "cascade" }),
     overallScore: integer("overall_score"),
     rubricScores: text("rubric_scores").default("[]"), // JSON array
@@ -227,7 +240,7 @@ export const validationResults = sqliteTable("validation_results", {
 
 // ==================== CHAT SESSIONS ====================
 export const chatSessions = sqliteTable("chat_sessions", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     assignmentId: text("assignment_id").notNull().references(() => assignments.id, { onDelete: "cascade" }),
     type: text("type").default("tutor"), // tutor, debate
     systemInstruction: text("system_instruction"),
@@ -237,7 +250,7 @@ export const chatSessions = sqliteTable("chat_sessions", {
 
 // ==================== CHAT MESSAGES ====================
 export const chatMessages = sqliteTable("chat_messages", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     sessionId: text("session_id").notNull().references(() => chatSessions.id, { onDelete: "cascade" }),
     role: text("role").notNull(), // user, model, system
     content: text("content").notNull(),
@@ -246,7 +259,7 @@ export const chatMessages = sqliteTable("chat_messages", {
 
 // ==================== DAILY SYNAPSES ====================
 export const dailySynapses = sqliteTable("daily_synapses", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     assignmentId: text("assignment_id").notNull().references(() => assignments.id, { onDelete: "cascade" }),
     question: text("question").notNull(),
@@ -258,7 +271,7 @@ export const dailySynapses = sqliteTable("daily_synapses", {
 
 // ==================== NOTIFICATIONS ====================
 export const notifications = sqliteTable("notifications", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     title: text("title").notNull(),
     message: text("message"),
@@ -270,7 +283,7 @@ export const notifications = sqliteTable("notifications", {
 
 // ==================== TEMPLATES ====================
 export const templates = sqliteTable("templates", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     name: text("name").notNull(),
     course: text("course"),
@@ -284,7 +297,7 @@ export const templates = sqliteTable("templates", {
 
 // ==================== SCAFFOLDING TASKS ====================
 export const scaffoldingTasks = sqliteTable("scaffolding_tasks", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     assignmentId: text("assignment_id").notNull().references(() => assignments.id, { onDelete: "cascade" }),
     instruction: text("instruction").notNull(),
     durationSeconds: integer("duration_seconds").default(300),
@@ -294,7 +307,7 @@ export const scaffoldingTasks = sqliteTable("scaffolding_tasks", {
 
 // ==================== CALENDAR EVENTS ====================
 export const calendarEvents = sqliteTable("calendar_events", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
 
     // Event Identity
@@ -333,7 +346,7 @@ export const calendarEvents = sqliteTable("calendar_events", {
 
 // ==================== CONTENT BLOCKS ====================
 export const contentBlocks = sqliteTable("content_blocks", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: text("id").primaryKey().$defaultFn(() => generateUUID()),
     assignmentId: text("assignment_id").notNull().references(() => assignments.id, { onDelete: "cascade" }),
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
 

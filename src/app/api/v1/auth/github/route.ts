@@ -13,7 +13,7 @@ export async function GET() {
     );
   }
 
-  const callbackUrl = env.GITHUB_CALLBACK_URL || `${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'}/api/auth/callback/github`;
+  const callbackUrl = env.GITHUB_CALLBACK_URL || `${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'}/api/v1/auth/callback/github`;
 
   const githubAuthUrl = new URL('https://github.com/login/oauth/authorize');
   githubAuthUrl.searchParams.set('client_id', env.GITHUB_CLIENT_ID);

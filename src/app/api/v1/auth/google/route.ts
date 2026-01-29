@@ -13,7 +13,7 @@ export async function GET() {
     );
   }
 
-  const callbackUrl = env.GOOGLE_CALLBACK_URL || `${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'}/api/auth/callback/google`;
+  const callbackUrl = env.GOOGLE_CALLBACK_URL || `${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'}/api/v1/auth/callback/google`;
 
   const googleAuthUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth');
   googleAuthUrl.searchParams.set('client_id', env.GOOGLE_CLIENT_ID);

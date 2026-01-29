@@ -19,7 +19,7 @@ export interface RegisterData {
 
 export const authService = {
     async login(credentials: LoginCredentials): Promise<AuthResponse> {
-        const response = await api.post<{ success: boolean; data: AuthResponse }>('/api/auth/login', credentials);
+        const response = await api.post<{ success: boolean; data: AuthResponse }>('/api/v1/auth/login', credentials);
         const authData = response.data.data;
         if (authData.token) {
             localStorage.setItem('kala_token', authData.token);
@@ -29,7 +29,7 @@ export const authService = {
     },
 
     async register(data: RegisterData): Promise<AuthResponse> {
-        const response = await api.post<{ success: boolean; data: AuthResponse }>('/api/auth/register', data);
+        const response = await api.post<{ success: boolean; data: AuthResponse }>('/api/v1/auth/register', data);
         const authData = response.data.data;
         if (authData.token) {
             localStorage.setItem('kala_token', authData.token);
@@ -39,11 +39,12 @@ export const authService = {
     },
 
     async getMe(): Promise<User> {
-        const response = await api.get<{ success: boolean; data: User }>('/api/auth/me');
+        const response = await api.get<{ success: boolean; data: User }>('/api/v1/auth/me');
         const user = response.data.data;
         localStorage.setItem('kala_user', JSON.stringify(user));
         return user;
     },
+
 
     logout() {
         localStorage.removeItem('kala_token');

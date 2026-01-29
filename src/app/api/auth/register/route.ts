@@ -14,9 +14,12 @@ const registerSchema = z.object({
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    console.log('📝 Register Attempt:', { email: body.email, name: body.name, passwordLength: body.password?.length });
+    
     const parsed = registerSchema.safeParse(body);
 
     if (!parsed.success) {
+      console.error('❌ Validation Failed:', parsed.error.errors);
       return NextResponse.json({ success: false, error: parsed.error.errors[0].message }, { status: 400 });
     }
 

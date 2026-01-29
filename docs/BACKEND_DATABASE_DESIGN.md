@@ -10,13 +10,13 @@
 | Component | Technology | Justification |
 |-----------|------------|---------------|
 | **Runtime** | Node.js 20+ | JavaScript ecosystem, async-first, AI library support |
-| **Framework** | Express.js / Hono | Lightweight, middleware-based, easy to extend |
-| **Database** | Turso (libSQL) | SQLite-compatible, edge-ready, serverless-friendly |
-| **ORM** | Drizzle ORM | Type-safe, lightweight, great Turso support |
-| **Authentication** | JWT + bcrypt | Stateless, secure, industry standard |
-| **AI Provider** | Google Gemini API | Already integrated in frontend, multimodal support |
-| **File Storage** | Cloudflare R2 / S3 | Cost-effective, S3-compatible API |
-| **Validation** | Zod | Runtime type validation, TypeScript-native |
+| **Framework** | Next.js (App Router) | High-performance, serverless-ready, integrated API routes |
+| **Database** | Supabase (PostgreSQL) | Robust relational engine with pgvector for cerebral search |
+| **ORM** | Drizzle ORM | Type-safe, lightweight, native PostgreSQL support |
+| **Authentication** | Supabase Auth + JWT | Managed authentication with secure JWT integration |
+| **AI Provider** | Google Gemini API | Multimodal analysis and synthesis engine |
+| **File Storage** | Supabase Storage | Integrated S3-compatible storage with edge CDN |
+| **Validation** | Zod | Runtime type validation for reliable data flows |
 
 ### 1.2 Struktur Folder Backend
 
@@ -26,7 +26,7 @@ backend/
 │   ├── index.ts              # Entry point
 │   ├── app.ts                # Express/Hono app setup
 │   ├── config/
-│   │   ├── database.ts       # Turso connection
+│   │   ├── database.ts       # Supabase connection
 │   │   ├── gemini.ts         # AI client config
 │   │   └── env.ts            # Environment variables
 │   ├── routes/
@@ -71,7 +71,7 @@ backend/
 
 ---
 
-## 2. Database Design (Turso/libSQL)
+## 2. Database Design (Supabase/PostgreSQL)
 
 ### 2.1 Entity Relationship Diagram (ERD)
 
@@ -251,7 +251,7 @@ erDiagram
 ```sql
 -- Users table
 CREATE TABLE users (
-    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email TEXT UNIQUE NOT NULL,
     password_hash TEXT NOT NULL,
     name TEXT NOT NULL,
@@ -259,32 +259,32 @@ CREATE TABLE users (
     gemini_api_key TEXT,
     grok_api_key TEXT,
     ai_language TEXT DEFAULT 'en',
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX idx_users_email ON users(email);
 
 -- Assignments table
 CREATE TABLE assignments (
-    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
-    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     title TEXT NOT NULL,
     description TEXT,
     learning_outcome TEXT,
-    deadline DATETIME,
+    deadline TIMESTAMP WITH TIME ZONE,
     course TEXT DEFAULT 'General',
-    tags TEXT DEFAULT '[]', -- JSON array
-    rubrics TEXT DEFAULT '[]', -- JSON array
-    diagnostic_questions TEXT DEFAULT '[]', -- JSON array
-    diagnostic_responses TEXT DEFAULT '{}', -- JSON object
+    tags JSONB DEFAULT '[]',
+    rubrics JSONB DEFAULT '[]',
+    diagnostic_questions JSONB DEFAULT '[]',
+    diagnostic_responses JSONB DEFAULT '{}',
     overall_progress INTEGER DEFAULT 0,
     at_risk BOOLEAN DEFAULT FALSE,
     clarity_score INTEGER DEFAULT 0,
     last_synapse_date DATE,
     summative_reflection TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX idx_assignments_user_id ON assignments(user_id);
@@ -293,16 +293,16 @@ CREATE INDEX idx_assignments_course ON assignments(course);
 
 -- Milestones table
 CREATE TABLE milestones (
-    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
-    assignment_id TEXT NOT NULL REFERENCES assignments(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    assignment_id UUID NOT NULL REFERENCES assignments(id) ON DELETE CASCADE,
     title TEXT NOT NULL,
     description TEXT,
     estimated_minutes INTEGER DEFAULT 30,
-    deadline DATETIME,
+    deadline TIMESTAMP WITH TIME ZONE,
     status TEXT DEFAULT 'todo' CHECK (status IN ('todo', 'in_progress', 'completed')),
     sort_order INTEGER DEFAULT 0,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX idx_milestones_assignment_id ON milestones(assignment_id);
@@ -310,89 +310,89 @@ CREATE INDEX idx_milestones_status ON milestones(status);
 
 -- Mini Courses table
 CREATE TABLE mini_courses (
-    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
-    milestone_id TEXT UNIQUE NOT NULL REFERENCES milestones(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    milestone_id UUID UNIQUE NOT NULL REFERENCES milestones(id) ON DELETE CASCADE,
     learning_outcome TEXT,
     overview TEXT,
-    concepts TEXT DEFAULT '[]', -- JSON array
+    concepts JSONB DEFAULT '[]',
     practical_guide TEXT,
     formative_action TEXT,
     expert_tip TEXT,
     mastery_status TEXT DEFAULT 'untested' CHECK (mastery_status IN ('untested', 'refined', 'perfected')),
     formative_task_completed BOOLEAN DEFAULT FALSE,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX idx_mini_courses_milestone_id ON mini_courses(milestone_id);
 
 -- Debate Turns table
 CREATE TABLE debate_turns (
-    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
-    mini_course_id TEXT NOT NULL REFERENCES mini_courses(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    mini_course_id UUID NOT NULL REFERENCES mini_courses(id) ON DELETE CASCADE,
     role TEXT NOT NULL CHECK (role IN ('user', 'model')),
     content TEXT NOT NULL,
     intellectual_weight INTEGER DEFAULT 0,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX idx_debate_turns_mini_course_id ON debate_turns(mini_course_id);
 
 -- Files table
 CREATE TABLE files (
-    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
-    assignment_id TEXT NOT NULL REFERENCES assignments(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    assignment_id UUID NOT NULL REFERENCES assignments(id) ON DELETE CASCADE,
     name TEXT NOT NULL,
     type TEXT DEFAULT 'draft' CHECK (type IN ('instruction', 'draft', 'final', 'feedback')),
-    storage_key TEXT, -- S3/R2 key
+    storage_key TEXT, -- Supabase Storage key
     size TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX idx_files_assignment_id ON files(assignment_id);
 
 -- Validation Results table
 CREATE TABLE validation_results (
-    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
-    assignment_id TEXT NOT NULL REFERENCES assignments(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    assignment_id UUID NOT NULL REFERENCES assignments(id) ON DELETE CASCADE,
     overall_score INTEGER,
-    rubric_scores TEXT DEFAULT '[]', -- JSON array
-    strengths TEXT DEFAULT '[]', -- JSON array
-    weaknesses TEXT DEFAULT '[]', -- JSON array
-    recommendations TEXT DEFAULT '[]', -- JSON array
+    rubric_scores JSONB DEFAULT '[]',
+    strengths JSONB DEFAULT '[]',
+    weaknesses JSONB DEFAULT '[]',
+    recommendations JSONB DEFAULT '[]',
     alignment_score INTEGER,
-    assessment_date DATETIME DEFAULT CURRENT_TIMESTAMP
+    assessment_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX idx_validation_results_assignment_id ON validation_results(assignment_id);
 
 -- Chat Sessions table
 CREATE TABLE chat_sessions (
-    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
-    assignment_id TEXT NOT NULL REFERENCES assignments(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    assignment_id UUID NOT NULL REFERENCES assignments(id) ON DELETE CASCADE,
     type TEXT DEFAULT 'tutor' CHECK (type IN ('tutor', 'debate')),
     system_instruction TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX idx_chat_sessions_assignment_id ON chat_sessions(assignment_id);
 
 -- Chat Messages table
 CREATE TABLE chat_messages (
-    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
-    session_id TEXT NOT NULL REFERENCES chat_sessions(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    session_id UUID NOT NULL REFERENCES chat_sessions(id) ON DELETE CASCADE,
     role TEXT NOT NULL CHECK (role IN ('user', 'model', 'system')),
     content TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX idx_chat_messages_session_id ON chat_messages(session_id);
 
 -- Daily Synapses table
 CREATE TABLE daily_synapses (
-    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
-    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    assignment_id TEXT NOT NULL REFERENCES assignments(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    assignment_id UUID NOT NULL REFERENCES assignments(id) ON DELETE CASCADE,
     question TEXT NOT NULL,
     response TEXT,
     synapse_date DATE NOT NULL,
@@ -405,14 +405,14 @@ CREATE INDEX idx_daily_synapses_user_date ON daily_synapses(user_id, synapse_dat
 
 -- Notifications table
 CREATE TABLE notifications (
-    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
-    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     title TEXT NOT NULL,
     message TEXT,
     type TEXT DEFAULT 'system' CHECK (type IN ('deadline', 'risk', 'feedback', 'system')),
     read BOOLEAN DEFAULT FALSE,
-    link TEXT, -- JSON object
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    link JSONB,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX idx_notifications_user_id ON notifications(user_id);
@@ -420,28 +420,28 @@ CREATE INDEX idx_notifications_read ON notifications(read);
 
 -- Templates table
 CREATE TABLE templates (
-    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
-    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     name TEXT NOT NULL,
     course TEXT,
-    tags TEXT DEFAULT '[]', -- JSON array
-    rubrics TEXT DEFAULT '[]', -- JSON array
+    tags JSONB DEFAULT '[]',
+    rubrics JSONB DEFAULT '[]',
     learning_outcome TEXT,
-    diagnostic_questions TEXT DEFAULT '[]', -- JSON array
-    milestone_templates TEXT DEFAULT '[]', -- JSON array
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    diagnostic_questions JSONB DEFAULT '[]',
+    milestone_templates JSONB DEFAULT '[]',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX idx_templates_user_id ON templates(user_id);
 
 -- Scaffolding Tasks table
 CREATE TABLE scaffolding_tasks (
-    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
-    assignment_id TEXT NOT NULL REFERENCES assignments(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    assignment_id UUID NOT NULL REFERENCES assignments(id) ON DELETE CASCADE,
     instruction TEXT NOT NULL,
     duration_seconds INTEGER DEFAULT 300,
     completed BOOLEAN DEFAULT FALSE,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX idx_scaffolding_tasks_assignment_id ON scaffolding_tasks(assignment_id);
@@ -477,18 +477,20 @@ ORDER BY a.deadline ASC;
 -- READ: Get assignment detail with milestones
 SELECT 
     a.*,
-    json_group_array(
-        json_object(
-            'id', m.id,
-            'title', m.title,
-            'status', m.status,
-            'estimatedMinutes', m.estimated_minutes
+    (
+        SELECT json_agg(
+            json_build_object(
+                'id', m.id,
+                'title', m.title,
+                'status', m.status,
+                'estimatedMinutes', m.estimated_minutes
+            )
         )
+        FROM milestones m 
+        WHERE m.assignment_id = a.id
     ) as milestones
 FROM assignments a
-LEFT JOIN milestones m ON a.id = m.assignment_id
-WHERE a.id = 'assignment-uuid'
-GROUP BY a.id;
+WHERE a.id = 'assignment-uuid';
 
 -- UPDATE: Toggle milestone status
 UPDATE milestones 
@@ -517,7 +519,7 @@ SELECT * FROM assignments
 WHERE at_risk = TRUE
   AND user_id = 'user-uuid'
   AND overall_progress < 50
-  AND deadline < datetime('now', '+48 hours');
+  AND deadline < (NOW() + INTERVAL '48 hours');
 
 -- QUERY: Get today's synapse for user
 SELECT * FROM daily_synapses

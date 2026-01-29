@@ -12,7 +12,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-20+-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Turso](https://img.shields.io/badge/Database-Turso-4FF8D2?style=flat-square)](https://turso.tech/)
+[![Supabase](https://img.shields.io/badge/Database-Supabase-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com/)
 
 ---
 
@@ -115,7 +115,7 @@ Timer Pomodoro bawaan dengan interval yang dapat disesuaikan untuk sesi deep wor
 | **Node.js** | 20+ | Runtime JavaScript |
 | **Express** | 4.18 | Framework API |
 | **Drizzle ORM** | Latest | Manajemen database |
-| **Turso** | libSQL | Database edge yang cepat |
+| **Supabase** | PostgreSQL | Backend as a Service & Database |
 | **Passport.js** | 0.7 | Autentikasi |
 | **JWT** | Latest | Token keamanan |
 
@@ -165,9 +165,10 @@ GEMINI_API_KEY=api-key-gemini-anda
 
 **Backend** (`backend/.env`):
 ```env
-# Database (Turso)
-TURSO_DATABASE_URL=libsql://database-anda.turso.io
-TURSO_AUTH_TOKEN=token-autentikasi-anda
+# Database (Supabase)
+SUPABASE_URL=https://proyek-anda.supabase.co
+SUPABASE_ANON_KEY=anon-key-anda
+DATABASE_URL=postgres://postgres.proyek-anda.supabase.co:5432/postgres
 
 # Autentikasi
 JWT_SECRET=kunci-rahasia-minimal-32-karakter-sangat-panjang
@@ -450,7 +451,7 @@ Terima kasih kepada semua yang telah berkontribusi pada proyek ini:
 
 - [Google Gemini](https://ai.google.dev/) - AI capabilities
 - [xAI Grok](https://x.ai/) - Creative AI features
-- [Turso](https://turso.tech/) - Edge database
+- [Supabase](https://supabase.com/) - Cloud database & auth
 - [Lucide Icons](https://lucide.dev/) - Beautiful icons
 - [Framer Motion](https://www.framer.com/motion/) - Smooth animations
 - Semua kontributor yang luar biasa!

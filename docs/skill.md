@@ -79,7 +79,7 @@ Membangun API dan logika bisnis dari nol, termasuk autentikasi, integrasi dengan
 | **TypeScript** | Advanced | Strict typing, generics, decorators |
 | **REST API Design** | Advanced | Resource naming, HTTP methods, status codes |
 | **Authentication** | Advanced | JWT, OAuth, session management |
-| **SQL/libSQL** | Intermediate | Query optimization, transactions |
+| **SQL/PostgreSQL** | Intermediate | Query optimization, transactions |
 | **ORM (Drizzle)** | Intermediate | Schema design, migrations |
 | **Testing** | Intermediate | Jest, Supertest, mocking |
 | **Docker** | Basic | Containerization, compose |
@@ -102,7 +102,7 @@ Membangun API dan logika bisnis dari nol, termasuk autentikasi, integrasi dengan
 |----------|-------|
 | **Runtime** | Node.js 20+, npm/pnpm |
 | **Framework** | Express.js, Hono, Fastify |
-| **Database** | Turso (libSQL), Drizzle ORM |
+| **Database** | Supabase (PostgreSQL), Drizzle ORM |
 | **Auth** | jsonwebtoken, bcrypt |
 | **Validation** | Zod, Joi |
 | **Testing** | Vitest, Supertest |
@@ -126,29 +126,29 @@ Membangun API dan logika bisnis dari nol, termasuk autentikasi, integrasi dengan
 ## 3. Database Engineer
 
 ### 📋 Deskripsi Peran
-Merancang, mengimplementasikan, dan mengelola database menggunakan Turso (libSQL), termasuk optimasi query dan strategi backup.
+Merancang, mengimplementasikan, dan mengelola database menggunakan Supabase (PostgreSQL), termasuk optimasi query dan strategi backup.
 
 ### 💪 Hard Skills
 
 | Skill | Level Required | Description |
 |-------|----------------|-------------|
 | **SQL** | Advanced | Complex queries, CTEs, window functions |
-| **SQLite/libSQL** | Advanced | Turso-specific features, edge deployment |
+| **PostgreSQL** | Advanced | Relational features, pgvector, triggers |
 | **Database Design** | Advanced | Normalization, ER diagrams, indexing |
 | **ORM** | Intermediate | Drizzle schema design, migrations |
 | **Query Optimization** | Intermediate | EXPLAIN, index strategies |
 | **Data Modeling** | Intermediate | Entity relationships, constraints |
-| **Backup/Recovery** | Basic | Turso replication, point-in-time recovery |
+| **Backup/Recovery** | Basic | Supabase point-in-time recovery |
 
 ### 🛠️ Tools & Stack
 
 | Category | Tools |
 |----------|-------|
-| **Database** | Turso, SQLite, libSQL |
+| **Database** | Supabase, PostgreSQL |
 | **ORM** | Drizzle ORM |
-| **GUI** | TablePlus, DBeaver, Turso CLI |
+| **GUI** | TablePlus, DBeaver, Supabase Studio |
 | **Migrations** | Drizzle Kit |
-| **Monitoring** | Turso Dashboard |
+| **Monitoring** | Supabase Dashboard |
 | **ERD Design** | dbdiagram.io, Lucidchart |
 
 ### ✅ Tanggung Jawab
@@ -291,7 +291,7 @@ Mengelola CI/CD pipeline, deployment infrastructure, monitoring, dan memastikan 
 |----------|-------|
 | **CI/CD** | GitHub Actions |
 | **Hosting** | Railway (BE) |
-| **Database** | Turso |
+| **Database** | Supabase |
 | **CDN/Edge** | Cloudflare |
 | **Monitoring** | Sentry, LogTail, UptimeRobot |
 | **Secrets** | Doppler, GitHub Secrets |

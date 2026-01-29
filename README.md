@@ -19,7 +19,7 @@
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Drizzle](https://img.shields.io/badge/Drizzle-ORM-C5F74F?style=flat)](https://orm.drizzle.team/)
-[![Turso](https://img.shields.io/badge/Turso-Edge%20DB-4FF8D2?style=flat)](https://turso.tech/)
+[![Supabase](https://img.shields.io/badge/Supabase-Backend%20OS-3ECF8E?style=flat&logo=supabase)](https://supabase.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38B2AC?style=flat&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
 ---
@@ -68,13 +68,13 @@ Integrated with **Gemini 1.5 Pro** and **Grok-1**, KALA doesn't just give answer
 
 ## 🛠️ Performance-First Architecture
 
-KALA is built on a stack designed for low-latency edge performance:
+KALA is built on a high-performance cloud stack designed for infinite scalability and neural context:
 
 *   **Frontend**: Next.js 15 (App Router) + Tailwind CSS 4.0
-*   **Database**: Turso (libSQL) globally distributed edge database
+*   **Database**: Supabase (PostgreSQL) with pgvector for cerebral search
 *   **ORM**: Drizzle ORM for type-safe neural queries
 *   **AI Orchestration**: Multi-model routing (Gemini for Analysis, Grok for Reasoning)
-*   **Auth**: Secure JWT + OAuth integration (Google/GitHub)
+*   **Auth**: Supabase Auth + Secure JWT integration
 
 ---
 
@@ -92,7 +92,7 @@ npm install
 
 # Configure Environment
 cp .env.example .env.local
-# Add your AI Keys and Database credentials
+# Add your AI Keys and Supabase credentials
 ```
 
 ### Development

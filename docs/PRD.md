@@ -319,7 +319,7 @@ Mahasiswa sering menghadapi tantangan dalam mengelola tugas akademis yang komple
 
 ### Phase 1: MVP Foundation (Sprint 1-2)
 - [ ] Backend authentication (JWT)
-- [ ] Database schema implementation (Turso)
+- [ ] Database schema implementation (Supabase)
 - [ ] Assignment CRUD API
 - [ ] Milestone management API
 - [ ] Basic AI integration for analysis
@@ -362,7 +362,7 @@ Mahasiswa sering menghadapi tantangan dalam mengelola tugas akademis yang komple
 > **Asumsi berikut diambil berdasarkan analisis frontend:**
 
 1. **AI Provider:** Menggunakan Google Gemini API (gemini-3-flash-preview dan gemini-3-pro-preview)
-2. **Database:** Turso (libSQL) untuk persistent storage
+2. **Database:** Supabase (PostgreSQL) untuk persistent storage
 3. **Authentication:** JWT-based dengan user sessions
 4. **File Storage:** Cloud storage (S3-compatible) untuk file vault
 5. **Real-time:** WebSocket tidak diperlukan untuk MVP, polling acceptable

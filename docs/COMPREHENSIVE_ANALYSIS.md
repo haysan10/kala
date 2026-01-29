@@ -343,13 +343,13 @@ KALA/
 |-----------|------------|--------|
 | Runtime | Node.js 20+ | ✅ |
 | Framework | Express.js | ✅ |
-| Database | Turso (libSQL) | ✅ |
+| Database | Supabase (PostgreSQL) | ✅ |
 | ORM | Drizzle ORM | ✅ |
 | Auth | JWT + bcrypt | ✅ |
 | Validation | Zod | ✅ |
 | AI Provider | Google Gemini | ✅ |
 
-### 4.2 Database Schema Summary (Turso)
+### 4.2 Database Schema Summary (Supabase)
 
 | Table | Purpose | Key Relations |
 |-------|---------|---------------|
@@ -555,7 +555,7 @@ export class AIRouterService {
 | **Styling** | Tailwind CSS, Custom dark mode |
 | **Icons** | Lucide React |
 | **Backend** | Node.js 20+, Express.js |
-| **Database** | Turso (libSQL) |
+| **Database** | Supabase (PostgreSQL) |
 | **ORM** | Drizzle ORM |
 | **Auth** | JWT + bcrypt |
 | **Validation** | Zod |

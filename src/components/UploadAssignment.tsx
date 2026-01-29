@@ -251,11 +251,7 @@ const UploadAssignment: React.FC<UploadAssignmentProps> = ({ templates, onCreate
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Paste raw instructions..."
-            style={{ 
-              color: 'var(--text-stealth)',
-              caretColor: 'var(--text-caret)'
-            }}
-            className="flex-1 w-full bg-zinc-50 dark:bg-black/20 rounded-xl p-4 text-xs font-medium border-none outline-none focus:ring-1 focus:ring-zinc-200 dark:focus:ring-zinc-800 transition-all resize-none placeholder:text-zinc-200 dark:placeholder:text-zinc-800 min-h-[160px] [--text-stealth:#f9fafb] dark:[--text-stealth:#09090b] [--text-caret:#000] dark:[--text-caret:#fff]"
+            className="flex-1 w-full bg-zinc-50 dark:bg-black/20 text-zinc-900 dark:text-white rounded-xl p-4 text-xs font-medium border-none outline-none focus:ring-1 focus:ring-zinc-200 dark:focus:ring-zinc-800 transition-all resize-none placeholder:text-zinc-200 dark:placeholder:text-zinc-800 min-h-[160px]"
           />
         </div>
 
